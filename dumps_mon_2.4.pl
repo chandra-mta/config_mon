@@ -1310,7 +1310,7 @@ for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
     }
   } # if ( ($eboxarr[$i]) > $ebox_lim && $eboxviol == 0) {
 
-  if ( ($mnframarr[$i]) > 4 && $eph27sarr[$i] == $last27s && ($eph27sarr[$i]+1) % 2 == 1) {  # only check if we know eph27v shows voltage
+  if ( ($mnframarr[$i]) > 20 && $mnframarr[$i]) < 108 && $eph27sarr[$i] == $last27s && ($eph27sarr[$i]+1) % 2 == 1) {  # only check if we know eph27v shows voltage
     #if ( ($mnframarr[$i]) > 4 && $eph27sarr[$i] != $last27s && ($eph27sarr[$i]+1) % 2 == 0 && $eph27varr[$i] < $eph27v_lim && $eph27vviol == 0) {
     if ( $eph27varr[$i] < $eph27v_lim && $eph27vviol == 0) {
       $eph27vviol = 1;
