@@ -2053,7 +2053,7 @@ if ( -s $poutfile ) {
     #print MAIL "This message sent to sot_red_alert\n";
     #print MAIL "This message sent to brad swolk\n";  #turnbackon
     print MAIL "This message sent to sot_lead\n";
-    print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
+    #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
     close MAIL;
     close LOCK;
   }  #endelse
