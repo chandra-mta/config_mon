@@ -30,6 +30,7 @@ use Discrete;
 # 12/19/03 BS add alert for HKP27V (in iru files, for convenience)
 # 03/29/04 BS send HKP27V to sot_yellow_alert, resend TEPHIN if > 102 F
 # 06/03/04 BS added ephin 5EHSE300
+# 02/10/05 BS added PLINE04
 
 # ************** Program Parameters ***************************
 
@@ -66,6 +67,9 @@ $tephin_lim=99.00;  # 99F
 $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=40.0; # ephin ebox 40C
 
+# pline temp limits
+$pline04_lim=42.5; lower limit F
+
 #  predicted state file
 #$pred_file = "/home/brad/Dumps/Dumps_mon/pred_state.txt";
 
@@ -76,6 +80,7 @@ $ioutfile = "dumps_mon_iru.out"; #temp out for iru violations
 $eoutfile = "dumps_mon_eph.out"; #temp out for eph temp violations
 $evoutfile = "dumps_mon_ephv.out"; #temp out for eph voltage violations
 $doutfile = "dumps_mon_dea.out"; #temp out for dea violations
+$poutfile = "dumps_mon_pline.out"; #temp out for pline violations
 
 #  hack to get name of dump file(s) processed
 $dumpname = "/data/mta/Script/Dumps/Dumps_mon/IN/xtmpnew";
@@ -103,11 +108,13 @@ my @pcadfiles;
 my @acisfiles;
 my @irufiles;
 my @deatfiles;
+my @mupsfiles;
 my $pcadfile;
 my $ccdmfile;
 my $acisfile;
 my $irufile;
 my $deatfile;
+my $mupsfile;
 my $counter;
 
 my @timearr; #ccdm times
@@ -115,6 +122,7 @@ my @qttimearr; #pcad times
 my @atimearr; #acis times
 my @itimearr; #iru times
 my @dttimearr; #dea temp times
+my @mtimearr; #mups temp times
 my @tscposarr;
 my @faposarr;
 my @tratarr;
@@ -157,6 +165,7 @@ my @tephinarr; #TEPHIN
 my @eph27varr; # ephin 27v V & I
 my @eph27sarr; #ephin 27v switch
 my @eboxarr; #ephin ebox
+my @pline04arr; #mups pline04
 my @mnframarr; #minor frame number
 
 if ($cinfile =~ /^\@/) {
@@ -274,6 +283,29 @@ if ($dtinfile =~ /^\@/) {
 }
 else {
     $deatfiles[0] = $dtinfile;
+}
+
+if ($mupsfile =~ /^\@/) {
+    $mupsfile = substr($mupsfile, 1);
+
+    my @patharr = split("/", $mupsfile);
+    my $path = "";
+    
+    for ($ii = 0; $ii < $#patharr; $ii++) {
+	$path .= "/$patharr[$ii]";
+    }
+
+    open DTFILE, "<$mupsfile";
+    
+    $counter = 0;
+    while($mupsfile = <DTFILE>) {
+	chomp $mupsfile;
+	$mupsfiles[$counter++] = $mupsfile;
+    }
+    close DTFILE;
+}
+else {
+    $mupsfiles[0] = $mupsfile;
 }
 
 # *********************************************************
@@ -617,6 +649,51 @@ foreach $file (@irufiles) {
   } # read iru data
 
   close IRUFILE;
+}
+
+my $pline04col = 0;
+$intimecol = 0;
+$j = 0; # counter (indexer) for acis obs
+foreach $file (@mupsfiles) {
+
+  open MUPSFILE, "$file" or die;
+
+  $hdr = <MUPSFILE>;
+  chomp $hdr;
+  # Get column information on the input PRIMARYMUPS2 file
+  @hdrline = split ("\t", $hdr);
+
+  for ($ii=0; $ii<=$#hdrline; $ii++) {
+    if ($hdrline[$ii] eq "TIME") {
+      $mintimecol = $ii;
+    }    
+    elsif ($hdrline[$ii] eq "PLINE04T") {
+      $pline04col = $ii;
+    }
+  } # for ($ii=0; $ii<=$#hdrline; $ii++)
+
+  my @inarr;
+  my $inline;
+
+  # remove whitespace line
+  $inline = <MUPSFILE>;
+  # read MUPS data
+  while ( defined ($inline = <MUPSFILE>)) {
+    chomp ($inline);
+    @inarr = split ("\t", $inline);
+    # fix acorn y2k bug
+    my @time = split (" ", $inarr[$mintimecol]);
+    if ($time[0] < 1900) {
+      $time[0] = $time[0] + 1900;
+    }
+    $mtimearr[$j] = join (":", @time);
+    my @tmptime = split ("::", $mtimearr[$j]);
+    $mtimearr[$j] = join (":", @tmptime);
+    $pline04arr[$j] = $inarr[$pline04col];
+    ++$j;
+  } # read iru data
+
+  close MUPSFILE;
 }
 
 #  dea hkp temperatures - this one's different than the others
@@ -1268,6 +1345,31 @@ close REPORT;
 close REPORTV;
 
 # ******************************************************************
+# mups pline checks
+open REPORT, "> $poutfile";
+my $pline04viol=0;
+my $trectime = 120; # 
+$jj=0;
+for ( $i=0; $i<$#mtimearr; $i+=2 ) {  # 
+  if ( ($pline04arr[$i]) < $pline04_lim && $pline04viol == 0) {
+    $pline04viol = 1;
+    $pline04tmptime = $mtimearr[$i];
+    $pline04tmppos = $pline04arr[$i];
+  } elsif ( ($pline04arr[$i]) < $pline04_lim && $pline04viol == 1) {
+    $pline04viol = 0;
+    if ( convert_time($mtimearr[$i]) - convert_time($pline04tmptime) > $trectime ) {
+      printf REPORT " PLINE04   Violation at %19s Value: %7.2f Limit: \> %7.2f deg F\n", $pline04tmptime, $pline04tmppos, $pline04_lim;
+      printf REPORT " PLINE04   Recovery at %19s Value: %7.2f Limit: \> %7.2f deg F\n", $mtimearr[$i], $pline04arr[$i], $pline04_lim;
+    }
+  } # if ( ($pline04arr[$i]) < $pline04_lim && $pline04viol == 0) {
+
+} # for ( $i=0; $i<$#mtimearr; $i++ ) {
+if ( $pline04viol == 1 ) {
+      printf REPORT " PLINE04   Violation at %19s Value: %7.2f Limit: \> %7.2f deg F\n", $pline04tmptime, $pline04tmppos, $pline04_lim;
+}
+close REPORT;
+
+# ******************************************************************
 # acis dea hk temp checks
 my $deahk1viol = 0;
 my $deahk2viol = 0;
@@ -1898,6 +2000,69 @@ if ( -s $evoutfile ) {
   unlink $lockfile;
 }
 unlink $evoutfile;
+
+# *******************************************************************
+#  E-mail pline violations, if any
+# *******************************************************************
+$lockfile = "./.dumps_mon_mups_lock";
+if ( -s $poutfile ) {
+  if ( -s $lockfile ) {  # already sent, don't send again
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    print MAIL "xconfig_mon_2.4 \n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$poutfile";
+    `date >> $lockfile`;
+    open LOCK, ">> $lockfile";
+    
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    print MAIL "This message sent to brad\n";
+    close MAIL;
+    close LOCK;
+  } else {  # first violation, tell someone
+    open MAIL, "|mailx -s config_mon brad";
+    #open MAIL, "|mailx -s config_mon sot_lead brad";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    print MAIL "config_mon_2.4\n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$poutfile";
+
+    `date > $lockfile`;
+    open LOCK, ">> $lockfile";
+
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    #print MAIL "Future violations will not be reported until rearmed by MTA.\n";
+    #print MAIL "This message sent to sot_yellow_alert\n";
+    #print MAIL "This message sent to sot_red_alert\n";
+    #print MAIL "This message sent to brad swolk\n";  #turnbackon
+    print MAIL "This message sent to sot_lead\n";
+    #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
+    close MAIL;
+    close LOCK;
+  }  #endelse
+
+} else { # no violation, rearm alert
+  unlink $lockfile;
+}
+unlink $poutfile;
 # end **************************************************************
 
 sub parse_args {
@@ -1906,6 +2071,7 @@ sub parse_args {
     my $ainfile_found = 0;
     my $ginfile_found = 0;
     my $dinfile_found = 0;
+    my $minfile_found = 0;
     
     for ($ii = 0; $ii <= $#ARGV; $ii++) {
 	if (!($ARGV[$ii] =~ /^-/)) {
@@ -1969,6 +2135,18 @@ sub parse_args {
 	    }
 	    else {
 		$dtinfile = substr($ARGV[$ii], 2);
+	    }
+	} # if ($ARGV[$ii] =~ /^-d/)
+
+	# -m <infile>
+	if ($ARGV[$ii] =~ /^-m/) {
+	    $minfile_found = 1;
+	    if ($ARGV[$ii] =~ /^-m$/) {
+		$ii++;
+		$mupsfile = $ARGV[$ii];	    
+	    }
+	    else {
+		$mupsfile = substr($ARGV[$ii], 2);
 	    }
 	} # if ($ARGV[$ii] =~ /^-d/)
 
