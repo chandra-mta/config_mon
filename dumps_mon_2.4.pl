@@ -68,7 +68,7 @@ $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=40.0; # ephin ebox 40C
 
 # pline temp limits
-$pline04_lim=42.5; lower limit F
+$pline04_lim=42.5;  #lower limit F
 
 #  predicted state file
 #$pred_file = "/home/brad/Dumps/Dumps_mon/pred_state.txt";
