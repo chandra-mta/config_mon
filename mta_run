@@ -9,6 +9,7 @@ ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'CCDM' | sed 's/^/IN\//' > ccdmlis
 ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'PCAD' | sed 's/^/IN\//' > pcadlist
 ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'ACIS' | sed 's/^/IN\//' > acislist
 ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'IRU' | sed 's/^/IN\//' > irulist
+ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'MUPS2' | sed 's/^/IN\//' > mupslist
 if (test -s ccdmlist); then
   if (test -s pcadlist); then
 
@@ -24,6 +25,7 @@ if (test -s ccdmlist); then
     mv pcadlist IN/pcadlist.last
     mv acislist IN/acislist.last
     mv irulist IN/irulist.last
+    mv mupslist IN/mupslist.last
     # clean up
     /opt/local/bin/gzip IN/*.tl
     #mv IN/*.tl.gz /home/brad/Dumps/TLfiles
