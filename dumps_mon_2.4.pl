@@ -1355,7 +1355,7 @@ for ( $i=0; $i<$#mtimearr; $i+=2 ) {  #
     $pline04viol = 1;
     $pline04tmptime = $mtimearr[$i];
     $pline04tmppos = $pline04arr[$i];
-  } elsif ( ($pline04arr[$i]) < $pline04_lim && $pline04viol == 1) {
+  } elsif ( ($pline04arr[$i]) > $pline04_lim && $pline04viol == 1) {
     $pline04viol = 0;
     if ( convert_time($mtimearr[$i]) - convert_time($pline04tmptime) > $trectime ) {
       printf REPORT " PLINE04   Violation at %19s Value: %7.2f Limit: \> %7.2f deg F\n", $pline04tmptime, $pline04tmppos, $pline04_lim;
@@ -2053,8 +2053,8 @@ if ( -s $poutfile ) {
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to sot_red_alert\n";
     #print MAIL "This message sent to brad swolk\n";  #turnbackon
-    print MAIL "This message sent to sot_lead\n";
-    #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
+    #print MAIL "This message sent to sot_lead\n";
+    print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
     close MAIL;
     close LOCK;
   }  #endelse
