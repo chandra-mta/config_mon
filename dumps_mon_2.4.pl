@@ -2028,8 +2028,7 @@ if ( -s $poutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon brad";
-    #open MAIL, "|mailx -s config_mon sot_lead brad";
+    open MAIL, "|mailx -s config_mon sot_lead brad";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.4\n\n"; # current version
@@ -2053,7 +2052,7 @@ if ( -s $poutfile ) {
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to sot_red_alert\n";
     #print MAIL "This message sent to brad swolk\n";  #turnbackon
-    #print MAIL "This message sent to sot_lead\n";
+    print MAIL "This message sent to sot_lead\n";
     print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
     close MAIL;
     close LOCK;
