@@ -148,6 +148,62 @@ my @apdbarr; #acis 1PDEABT
 my @adpyarr; #acis 1DPAMYT
 my @adpzarr; #acis 1DPAMZT
 my @adezarr; #acis 1DEAMZT
+my @cbat;
+my @cbbt;
+my @crat;
+my @crbt;
+my @dactat;
+my @dactbt;
+my @dahacu;
+my @dahat;
+my @dahavo;
+my @dahbcu;
+my @dahbt;
+my @dahbvo;
+my @dahhavo;
+my @dahhbvo;
+my @de28avo;
+my @de28bvo;
+my @deamzt;
+my @deicacu;
+my @deicbcu;
+my @den0avo;
+my @den0bvo;
+my @den1avo;
+my @den1bvo;
+my @dep0avo;
+my @dep0bvo;
+my @dep1avo;
+my @dep1bvo;
+my @dep2avo;
+my @dep2bvo;
+my @dep3avo;
+my @dep3bvo;
+my @dp28avo;
+my @dp28bvo;
+my @dpamyt;
+my @dpamzt;
+my @dpicacu;
+my @dpicbcu;
+my @dpp0avo;
+my @dpp0bvo;
+my @mahcat;
+my @mahcbt;
+my @mahoat;
+my @mahobt;
+my @oahat;
+my @oahbt;
+my @pdeaat;
+my @pdeabt;
+my @pin1at;
+my @ssmyt;
+my @sspyt;
+my @vahcat;
+my @vahcbt;
+my @vahoat;
+my @vahobt;
+my @wrat;
+my @wrbt;
 my @deatemp1 ; # acis dea temps
 my @deatemp2 ; # acis dea temps
 my @deatemp3 ; # acis dea temps
@@ -513,6 +569,62 @@ my $dpycol = 0;
 my $dpzcol = 0;
 my $dezcol = 0;
 $intimecol = 0;
+my $cbatcol=0;
+my $cbbtcol=0;
+my $cratcol=0;
+my $crbtcol=0;
+my $dactatcol=0;
+my $dactbtcol=0;
+my $dahacucol=0;
+my $dahatcol=0;
+my $dahavocol=0;
+my $dahbcucol=0;
+my $dahbtcol=0;
+my $dahbvocol=0;
+my $dahhavocol=0;
+my $dahhbvocol=0;
+my $de28avocol=0;
+my $de28bvocol=0;
+my $deamztcol=0;
+my $deicacucol=0;
+my $deicbcucol=0;
+my $den0avocol=0;
+my $den0bvocol=0;
+my $den1avocol=0;
+my $den1bvocol=0;
+my $dep0avocol=0;
+my $dep0bvocol=0;
+my $dep1avocol=0;
+my $dep1bvocol=0;
+my $dep2avocol=0;
+my $dep2bvocol=0;
+my $dep3avocol=0;
+my $dep3bvocol=0;
+my $dp28avocol=0;
+my $dp28bvocol=0;
+my $dpamytcol=0;
+my $dpamztcol=0;
+my $dpicacucol=0;
+my $dpicbcucol=0;
+my $dpp0avocol=0;
+my $dpp0bvocol=0;
+my $mahcatcol=0;
+my $mahcbtcol=0;
+my $mahoatcol=0;
+my $mahobtcol=0;
+my $oahatcol=0;
+my $oahbtcol=0;
+my $pdeaatcol=0;
+my $pdeabtcol=0;
+my $pin1atcol=0;
+my $ssmytcol=0;
+my $sspytcol=0;
+my $vahcatcol=0;
+my $vahcbtcol=0;
+my $vahoatcol=0;
+my $vahobtcol=0;
+my $wratcol=0;
+my $wrbtcol=0;
 $j = 0; # counter (indexer) for acis obs
 foreach $file (@acisfiles) {
 
@@ -542,8 +654,173 @@ foreach $file (@acisfiles) {
     elsif ($hdrline[$ii] eq "1DPAMZT") {
       $dpzcol = $ii;
     }
-    elsif ($hdrline[$ii] eq "1DEAMZT") {
-      $dezcol = $ii;
+    elsif ($hdrline[$ii] =~ /^1cbat/i) {
+      $cbatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1cbbt/i) {
+      $cbbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1crat/i) {
+      $cratcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1crbt/i) {
+      $crbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dactat/i) {
+      $dactatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dactbt/i) {
+      $dactbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahacu/i) {
+      $dahacucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahat/i) {
+      $dahatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahavo/i) {
+      $dahavocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahbcu/i) {
+      $dahbcucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahbt/i) {
+      $dahbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahbvo/i) {
+      $dahbvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahhavo/i) {
+      $dahhavocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dahhbvo/i) {
+      $dahhbvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1de28avo/i) {
+      $de28avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1de28bvo/i) {
+      $de28bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1deamzt/i) {
+      $deamztcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1deicacu/i) {
+      $deicacucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1deicbcu/i) {
+      $deicbcucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1den0avo/i) {
+      $den0avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1den0bvo/i) {
+      $den0bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1den1avo/i) {
+      $den1avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1den1bvo/i) {
+      $den1bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep0avo/i) {
+      $dep0avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep0bvo/i) {
+      $dep0bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep1avo/i) {
+      $dep1avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep1bvo/i) {
+      $dep1bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep2avo/i) {
+      $dep2avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep2bvo/i) {
+      $dep2bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep3avo/i) {
+      $dep3avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dep3bvo/i) {
+      $dep3bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dp28avo/i) {
+      $dp28avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dp28bvo/i) {
+      $dp28bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpamyt/i) {
+      $dpamytcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpamzt/i) {
+      $dpamztcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpicacu/i) {
+      $dpicacucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpicbcu/i) {
+      $dpicbcucol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpp0avo/i) {
+      $dpp0avocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1dpp0bvo/i) {
+      $dpp0bvocol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1mahcat/i) {
+      $mahcatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1mahcbt/i) {
+      $mahcbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1mahoat/i) {
+      $mahoatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1mahobt/i) {
+      $mahobtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1oahat/i) {
+      $oahatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1oahbt/i) {
+      $oahbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1pdeaat/i) {
+      $pdeaatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1pdeabt/i) {
+      $pdeabtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1pin1at/i) {
+      $pin1atcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1ssmyt/i) {
+      $ssmytcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1sspyt/i) {
+      $sspytcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1vahcat/i) {
+      $vahcatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1vahcbt/i) {
+      $vahcbtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1vahoat/i) {
+      $vahoatcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1vahobt/i) {
+      $vahobtcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1wrat/i) {
+      $wratcol=$ii;
+    }
+    elsif ($hdrline[$ii] =~ /^1wrbt/i) {
+      $wrbtcol=$ii;
     }
   } # for ($ii=0; $ii<=$#hdrline; $ii++)
 
@@ -1692,7 +1969,7 @@ $lockfile = "./.dumps_mon_acis_lock";
 if ( -s $aoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu plucinsk";
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu acisdude";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.4 \n\n"; # current version
     if ( -s $dumpname ) {
