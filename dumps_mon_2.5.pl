@@ -142,68 +142,6 @@ my @raarr;
 my @decarr;
 my @rollarr;
 my @ditharr;
-my @apinarr; #acis 1PIN1AT
-my @apdaarr; #acis 1PDEAAT
-my @apdbarr; #acis 1PDEABT
-my @adpyarr; #acis 1DPAMYT
-my @adpzarr; #acis 1DPAMZT
-my @adezarr; #acis 1DEAMZT
-my @cbat;
-my @cbbt;
-my @crat;
-my @crbt;
-my @dactat;
-my @dactbt;
-my @dahacu;
-my @dahat;
-my @dahavo;
-my @dahbcu;
-my @dahbt;
-my @dahbvo;
-my @dahhavo;
-my @dahhbvo;
-my @de28avo;
-my @de28bvo;
-my @deamzt;
-my @deicacu;
-my @deicbcu;
-my @den0avo;
-my @den0bvo;
-my @den1avo;
-my @den1bvo;
-my @dep0avo;
-my @dep0bvo;
-my @dep1avo;
-my @dep1bvo;
-my @dep2avo;
-my @dep2bvo;
-my @dep3avo;
-my @dep3bvo;
-my @dp28avo;
-my @dp28bvo;
-my @dpamyt;
-my @dpamzt;
-my @dpicacu;
-my @dpicbcu;
-my @dpp0avo;
-my @dpp0bvo;
-my @mahcat;
-my @mahcbt;
-my @mahoat;
-my @mahobt;
-my @oahat;
-my @oahbt;
-my @pdeaat;
-my @pdeabt;
-my @pin1at;
-my @ssmyt;
-my @sspyt;
-my @vahcat;
-my @vahcbt;
-my @vahoat;
-my @vahobt;
-my @wrat;
-my @wrbt;
 my @deatemp1 ; # acis dea temps
 my @deatemp2 ; # acis dea temps
 my @deatemp3 ; # acis dea temps
@@ -560,298 +498,6 @@ foreach $file (@pcadfiles) {
   } # read pcad data
 
   close PCADFILE;
-}
-
-my $pincol = 0;
-my $pdacol = 0;
-my $pdbcol = 0;
-my $dpycol = 0;
-my $dpzcol = 0;
-my $dezcol = 0;
-$intimecol = 0;
-my $cbatcol=0;
-my $cbbtcol=0;
-my $cratcol=0;
-my $crbtcol=0;
-my $dactatcol=0;
-my $dactbtcol=0;
-my $dahacucol=0;
-my $dahatcol=0;
-my $dahavocol=0;
-my $dahbcucol=0;
-my $dahbtcol=0;
-my $dahbvocol=0;
-my $dahhavocol=0;
-my $dahhbvocol=0;
-my $de28avocol=0;
-my $de28bvocol=0;
-my $deamztcol=0;
-my $deicacucol=0;
-my $deicbcucol=0;
-my $den0avocol=0;
-my $den0bvocol=0;
-my $den1avocol=0;
-my $den1bvocol=0;
-my $dep0avocol=0;
-my $dep0bvocol=0;
-my $dep1avocol=0;
-my $dep1bvocol=0;
-my $dep2avocol=0;
-my $dep2bvocol=0;
-my $dep3avocol=0;
-my $dep3bvocol=0;
-my $dp28avocol=0;
-my $dp28bvocol=0;
-my $dpamytcol=0;
-my $dpamztcol=0;
-my $dpicacucol=0;
-my $dpicbcucol=0;
-my $dpp0avocol=0;
-my $dpp0bvocol=0;
-my $mahcatcol=0;
-my $mahcbtcol=0;
-my $mahoatcol=0;
-my $mahobtcol=0;
-my $oahatcol=0;
-my $oahbtcol=0;
-my $pdeaatcol=0;
-my $pdeabtcol=0;
-my $pin1atcol=0;
-my $ssmytcol=0;
-my $sspytcol=0;
-my $vahcatcol=0;
-my $vahcbtcol=0;
-my $vahoatcol=0;
-my $vahobtcol=0;
-my $wratcol=0;
-my $wrbtcol=0;
-$j = 0; # counter (indexer) for acis obs
-foreach $file (@acisfiles) {
-
-  open ACISFILE, "$file" or die;
-
-  $hdr = <ACISFILE>;
-  chomp $hdr;
-  # Get column information on the input PRIMARYACIS file
-  @hdrline = split ("\t", $hdr);
-
-  for ($ii=0; $ii<=$#hdrline; $ii++) {
-    if ($hdrline[$ii] eq "TIME") {
-      $intimecol = $ii;
-    }    
-    elsif ($hdrline[$ii] eq "1PIN1AT") {
-      $pincol = $ii;
-    }
-    elsif ($hdrline[$ii] eq "1PDEAAT") {
-      $pdacol = $ii;
-    }
-    elsif ($hdrline[$ii] eq "1PDEABT") {
-      $pdbcol = $ii;
-    }
-    elsif ($hdrline[$ii] eq "1DPAMYT") {
-      $dpycol = $ii;
-    }
-    elsif ($hdrline[$ii] eq "1DPAMZT") {
-      $dpzcol = $ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1cbat/i) {
-      $cbatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1cbbt/i) {
-      $cbbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1crat/i) {
-      $cratcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1crbt/i) {
-      $crbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dactat/i) {
-      $dactatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dactbt/i) {
-      $dactbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahacu/i) {
-      $dahacucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahat/i) {
-      $dahatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahavo/i) {
-      $dahavocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahbcu/i) {
-      $dahbcucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahbt/i) {
-      $dahbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahbvo/i) {
-      $dahbvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahhavo/i) {
-      $dahhavocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dahhbvo/i) {
-      $dahhbvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1de28avo/i) {
-      $de28avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1de28bvo/i) {
-      $de28bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1deamzt/i) {
-      $deamztcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1deicacu/i) {
-      $deicacucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1deicbcu/i) {
-      $deicbcucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1den0avo/i) {
-      $den0avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1den0bvo/i) {
-      $den0bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1den1avo/i) {
-      $den1avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1den1bvo/i) {
-      $den1bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep0avo/i) {
-      $dep0avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep0bvo/i) {
-      $dep0bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep1avo/i) {
-      $dep1avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep1bvo/i) {
-      $dep1bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep2avo/i) {
-      $dep2avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep2bvo/i) {
-      $dep2bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep3avo/i) {
-      $dep3avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dep3bvo/i) {
-      $dep3bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dp28avo/i) {
-      $dp28avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dp28bvo/i) {
-      $dp28bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpamyt/i) {
-      $dpamytcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpamzt/i) {
-      $dpamztcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpicacu/i) {
-      $dpicacucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpicbcu/i) {
-      $dpicbcucol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpp0avo/i) {
-      $dpp0avocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1dpp0bvo/i) {
-      $dpp0bvocol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1mahcat/i) {
-      $mahcatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1mahcbt/i) {
-      $mahcbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1mahoat/i) {
-      $mahoatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1mahobt/i) {
-      $mahobtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1oahat/i) {
-      $oahatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1oahbt/i) {
-      $oahbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1pdeaat/i) {
-      $pdeaatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1pdeabt/i) {
-      $pdeabtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1pin1at/i) {
-      $pin1atcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1ssmyt/i) {
-      $ssmytcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1sspyt/i) {
-      $sspytcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1vahcat/i) {
-      $vahcatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1vahcbt/i) {
-      $vahcbtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1vahoat/i) {
-      $vahoatcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1vahobt/i) {
-      $vahobtcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1wrat/i) {
-      $wratcol=$ii;
-    }
-    elsif ($hdrline[$ii] =~ /^1wrbt/i) {
-      $wrbtcol=$ii;
-    }
-  } # for ($ii=0; $ii<=$#hdrline; $ii++)
-
-  my @inarr;
-  my $inline;
-
-  # remove whitespace line
-  $inline = <ACISFILE>;
-  # read acis data
-  while ( defined ($inline = <ACISFILE>)) {
-    chomp ($inline);
-    @inarr = split ("\t", $inline);
-    # fix acorn y2k bug
-    my @time = split (" ", $inarr[$intimecol]);
-    if ($time[0] < 1900) {
-      $time[0] = $time[0] + 1900;
-    }
-    $atimearr[$j] = join (":", @time);
-    #$qttimearr[$j] = $inarr[$intimecol];
-    my @tmptime = split ("::", $atimearr[$j]);
-    $atimearr[$j] = join (":", @tmptime);
-    $apinarr[$j] = $inarr[$pincol];
-    $apdaarr[$j] = $inarr[$pdacol];
-    $apdbarr[$j] = $inarr[$pdbcol];
-    $adpyarr[$j] = $inarr[$dpycol];
-    $adpzarr[$j] = $inarr[$dpzcol];
-    $adezarr[$j] = $inarr[$dezcol];
-    ++$j;
-  } # read acis data
-
-  close ACISFILE;
 }
 
 my $airu1g1icol = 0;
@@ -1349,148 +995,80 @@ close DREPORT;
 
 # ******************************************************************
 # acis checks
-my $pinviol = 0;
-my $pdaviol = 0;
-my $pdbviol = 0;
-my $dpyviol = 0;
-my $dpzviol = 0;
-my $dezviol = 0;
-# ****** acis temp limits degC
-my $apinmin = -5.0; #1PIN1AT		PSMC Temp 1A
-my $apinmax = 41.0;
-my $hsapinmin = -20.0; #1PIN1AT	Health and Safety limits
-my $hsapinmax = 46.0;
-#$apinmax = 12.0; # test
-my $apdamin = 0.0 ; #1PDEAAT		PSMC DEA Power Supply Temp A
-my $apdamax = 57.0;
-my $hsapdamin = -10.0 ; #1PDEAAT		PSMC DEA Power Supply Temp A
-my $hsapdamax = 62.0;
-#$apdamin = 28.0 ; # test
-my $apdbmin = 0.0 ; #1PDEABT		PSMC DEA Power Supply Temp B
-my $apdbmax = 57.0;
-my $hsapdbmin = -10.0 ; #1PDEABT		PSMC DEA Power Supply Temp B
-my $hsapdbmax = 62.0;
-#$apdbmax = 10.0;# test
-my $adpymin = 1.0 ; #1DPAMYT		DPA -Y Panel Temp (RT810)
-my $adpymax = 20.0;
-my $hsadpymin = -20.0 ; #1DPAMYT		DPA -Y Panel Temp (RT810)
-my $hsadpymax = 40.5;
-#$adpymax = 10.0;# test
-my $adpzmin = 4.0 ; #1DPAMZT		DPA -Z Panel Temp (RT830)
-my $adpzmax = 20.0;
-my $hsadpzmin = -20.0 ; #1DPAMZT		DPA -Z Panel Temp (RT830)
-my $hsadpzmax = 40.5;
-#$adpzmin = 14.0 ; # test
-my $adezmin = 4.0 ; #1DEAMZT 	DEA -Z Panel Temp (RT830)
-my $adezmax = 12.0;
-my $hsadezmin = -20.0 ; #1DEAMZT 	DEA -Z Panel Temp (RT830)
-my $hsadezmax = 20.0;
-#$adezmin = 11.0 ; # test
+open REPORT, "> $aoutfile";
+my %acish;
+foreach $file (@acisfiles) {
+
+  open ACISFILE, "$file" or die;
+
+  $hdr = <ACISFILE>;
+  chomp $hdr;
+  # Get column information on the input PRIMARYACIS file
+  @hdrline = split ("\t", $hdr);
+
+  my @inarr;
+  my $inline;
+
+  # remove whitespace line
+  $inline = <ACISFILE>;
+  # read acis data
+  while ( defined ($inline = <ACISFILE>)) {
+    chomp ($inline);
+    @inarr = split ("\t", $inline);
+    # fix acorn y2k bug
+    my @time = split (" ", $inarr[0]);
+    if ($time[0] < 1900) {
+      $time[0] = $time[0] + 1900;
+    }
+    $atime = join (":", @time);
+    my @tmptime = split ("::", $atime);
+    $atime = join (":", @tmptime);
+    push @{$acish{"$hdrline[0]"}}, $atime;
+    for ($acisi=1;$acisi<=$#hdrline;$acisi++) {
+      push @{$acish{"$hdrline[$acisi]"}},$inarr[$acisi];
+    } # for ($acisi=1;$acisi<=$#hdrline;$acisi++) {
+  } # read acis data
+
+  close ACISFILE;
+}
+open(ACISPAR,"<acis_check.par");
+my %acispar;
+<ACISPAR>;
+<ACISPAR>;
+while (<ACISPAR>) {
+  chomp;
+  @parline=split; 
+  @acispar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0];
+} # while (<ACISPAR>) {
+close ACISPAR;
 
 $j = 0;
 open REPORT, "> $aoutfile";
-for ( $i=0; $i<$#atimearr; $i++ ) {
- #print "ACIS $i $#atimearr\n"; #debugggg
-
-  if ( $apinarr[$i] != 0 && ($apinarr[$i] <= $apinmin || $apinarr[$i] >= $apinmax) && $pinviol == 0) {
-    $pinviol = 1;
-    $pintmptime = $atimearr[$i];
-    $pintmppos = $apinarr[$i];
-  }
-  if ( $apinarr[$i] ne "" && $apinarr[$i] > $apinmin && $apinarr[$i] < $apinmax && $pinviol == 1) {
-    $pinviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($pintmptime) > $rectime ) {
-      printf REPORT "1PIN1AT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $pintmptime, $pintmppos, $apinmin, $apinmax, $hsapinmin,$hsapinmax;
-      printf REPORT "1PIN1AT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $apinarr[$i], $apinmin, $apinmax;
+@akeys=keys(%acispar);
+@time=@{$acish{"TIME"}};
+for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
+  for ( $j=0; $j<=$#akeys; $j++ ) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acispar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 0) {
+      $acispar{$akeys[$j]}[4]=1;
+      $acispar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[6]=${$acish{"$akeys[$j]"}}[$i];
     }
-  }
-
-  if ( $apdaarr[$i] ne "" && ($apdaarr[$i] <= $apdamin || $apdaarr[$i] >= $apdamax) && $pdaviol == 0) {
-    $pdaviol = 1;
-    $pdatmptime = $atimearr[$i];
-    $pdatmppos = $apdaarr[$i];
-  }
-  if ( $apdaarr[$i] ne "" && $apdaarr[$i] > $apdamin && $apdaarr[$i] < $apdamax && $pdaviol == 1) {
-    $pdaviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($pdatmptime) > $rectime ) {
-      printf REPORT "1PDEAAT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $pdatmptime, $pdatmppos, $apdamin, $apdamax, $hsapdamin,$hsapdamax;
-      printf REPORT "1PDEAAT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $apdaarr[$i], $apdamin, $apdamax;
+    if ( ${$acish{"$akeys[$j]"}}[$i] ne "" && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[2] && ${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 1) {
+      $acispar{"$akeys[$j]"}[4]=0;
+      $tdiff = convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]);
+      print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acispar{\"$akeys[$j]\"}}[2] ${$acispar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
+      if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]) > 300 ) {
+        printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+        printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+      }
     }
-  }
-
-  if ( $apdbarr[$i] ne "" && ($apdbarr[$i] <= $apdbmin || $apdbarr[$i] >= $apdbmax) && $pdbviol == 0) {
-    $pdbviol = 1;
-    $pdbtmptime = $atimearr[$i];
-    $pdbtmppos = $apdbarr[$i];
-  }
-  if ( $apdbarr[$i] ne "" && $apdbarr[$i] > $apdbmin && $apdbarr[$i] < $apdbmax && $pdbviol == 1) {
-    $pdbviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($pdbtmptime) > $rectime ) {
-      printf REPORT "1PDEABT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n Health & Safety limits: %7.2f,%7.2f", $pdbtmptime, $pdbtmppos, $apdbmin, $apdbmax,$hsapdbmin,$hsapdbmax;
-      printf REPORT "1PDEABT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $apdbarr[$i], $apdbmin, $apdbmax;
-    }
-  }
-
-  if ( $adpyarr[$i] ne "" && ($adpyarr[$i] <= $adpymin || $adpyarr[$i] >= $adpymax) && $dpyviol == 0) {
-    $dpyviol = 1;
-    $dpytmptime = $atimearr[$i];
-    $dpytmppos = $adpyarr[$i];
-  }
-  if ( $adpyarr[$i] ne "" && $adpyarr[$i] > $adpymin && $adpyarr[$i] < $adpymax && $dpyviol == 1) {
-    $dpyviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($dpytmptime) > $rectime ) {
-      printf REPORT "1DPAMYT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $dpytmptime, $dpytmppos, $adpymin, $adpymax,$hsadpymin,$hsadpymax;
-      printf REPORT "1DPAMYT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $adpyarr[$i], $adpymin, $adpymax;
-    }
-  }
-
-  if ( $adpzarr[$i] ne "" && ($adpzarr[$i] <= $adpzmin || $adpzarr[$i] >= $adpzmax) && $dpzviol == 0) {
-    $dpzviol = 1;
-    $dpztmptime = $atimearr[$i];
-    $dpztmppos = $adpzarr[$i];
-  }
-  if ( $adpzarr[$i] ne "" && $adpzarr[$i] > $adpzmin && $adpzarr[$i] < $adpzmax && $dpzviol == 1) {
-    $dpzviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($dpztmptime) > $rectime ) {
-      printf REPORT "1DPAMZT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $dpztmptime, $dpztmppos, $adpzmin, $adpzmax,$hsadpzmin,$hsadpzmax;
-      printf REPORT "1DPAMZT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $adpzarr[$i], $adpzmin, $adpzmax;
-    }
-  }
-
-  if ( $adezarr[$i] ne "" && ($adezarr[$i] <= $adezmin || $adezarr[$i] >= $adezmax) && $dezviol == 0) {
-    $dezviol = 1;
-    $deztmptime = $atimearr[$i];
-    $deztmppos = $adezarr[$i];
-  }
-  if ( $adezarr[$i] ne "" && $adezarr[$i] > $adezmin && $adezarr[$i] < $adezmax && $dezviol == 1) {
-    $dezviol = 0;
-    if ( convert_time($atimearr[$i]) - convert_time($deztmptime) > $rectime ) {
-      printf REPORT "1DEAMZT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $deztmptime, $deztmppos, $adezmin, $adezmax,$hsadezmin,$hsadezmax;
-      printf REPORT "1DEAMZT  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f\n", $atimearr[$i], $adezarr[$i], $adezmin, $adezmax;
-    }
-  }
-
-} # for #atimearr
-# Report violations that do not exhibit recovery
-if ( $pinviol == 1 ) {
-      printf REPORT "1PIN1AT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $pintmptime, $pintmppos, $apinmin, $apinmax,$hsapinmin,$hsapinmax;
-}
-if ( $pdaviol == 1 ) {
-      printf REPORT "1PDEAAT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $pdatmptime, $pdatmppos, $apdamin, $apdamax,$hsapdamin,$hsapdamax;
-}
-if ( $pdbviol == 1 ) {
-      printf REPORT "1PDEABT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $pdbtmptime, $pdbtmppos, $apdbmin, $apdbmax,$hsapdbmin,$hsapdbmax;
-}
-if ( $dpyviol == 1 ) {
-      printf REPORT "1DPAMYT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $dpytmptime, $dpytmppos, $adpymin, $adpymax,$hsadpymin,$hsadpymax;
-}
-if ( $dpzviol == 1 ) {
-      printf REPORT "1DPAMZT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $dpztmptime, $dpztmppos, $adpzmin, $adpzmax,$hsadpzmin,$hsadpzmax;
-}
-if ( $dezviol == 1 ) {
-      printf REPORT "1DEAMZT  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", $deztmptime, $deztmppos, $adezmin, $adezmax,$hsadezmin,$hsadezmax;
-}
-
+  } #for ( $j=0; $j<=$keys; $j++ ) {
+} #for ( $i=0; $i<=$#acish; $i++ ) {
+for ( $j=0; $j<=$#akeys; $j++ ) {
+  if ( ${$acispar{"$akeys[$j]"}}[4] == 1) {
+    printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+  } #
+} #for ( $j=0; $j<=$keys; $j++ ) {
 close REPORT;
 
 # ******************************************************************

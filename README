@@ -1,0 +1,18 @@
+From: Brad Spitzbart <brad@head.cfa.harvard.edu>
+Date: Wed, 12 Oct 2005 11:36:02 -0400
+To: swolk
+Subject: dumps_mon
+
+There are 50 new ACIS thermal msids being monitored.  There are a total of 90 
+msids monitored by dumps_mon.
+
+2 ephin temps
+1 ephin 27V
+1 mups pline04
+56 acis temps
+12 deahk temps
+1 IRU A - not needed
+6 sim,grat position
+1 sim temp
+6 rwheel speeds
+4 ra,dec,roll,dither
