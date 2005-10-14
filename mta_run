@@ -13,7 +13,7 @@ ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'MUPS2' | sed 's/^/IN\//' > mupsli
 if (test -s ccdmlist); then
   if (test -s pcadlist); then
 
-    dumps_mon_2.4.pl -c @ccdmlist -p @pcadlist -a @acislist -g@irulist -d IN/deahk_temp_in.tmp -m @mupslist
+    dumps_mon_2.5.pl -c @ccdmlist -p @pcadlist -a @acislist -g@irulist -d IN/deahk_temp_in.tmp -m @mupslist
     #dumps_mon_2.1.pl -c @ccdmlist -p @pcadlist -a @acislist
     #dumps_mon_2.0.pl -c @ccdmlist -p @pcadlist
 
