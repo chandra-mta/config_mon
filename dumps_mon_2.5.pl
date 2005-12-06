@@ -1634,7 +1634,7 @@ if ( -s $doutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon das plucinsk depasq brad swolk jnichols nadams goeke\@space.mit.edu eab\@space.mit.edu buehler@space.mit.edu";
+    open MAIL, "|mailx -s config_mon das plucinsk depasq brad swolk jnichols nadams goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
     #open MAIL, "|mail brad\@head-cfa.harvard.edu swolk\@head-cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
