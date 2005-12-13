@@ -1820,8 +1820,7 @@ if ( -s $evoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad swolk";
-    #open MAIL, "|mailx -s config_mon sot_lead brad";
-    open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon sot_lead fot brad";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.4\n\n"; # current version
