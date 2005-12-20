@@ -1565,7 +1565,7 @@ if ( -s $aoutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to brad\n";
+    print MAIL "This message sent to brad acisdude\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
@@ -1820,7 +1820,7 @@ if ( -s $evoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad swolk";
-    open MAIL, "|mailx -s config_mon sot_lead fot brad";
+    open MAIL, "|mailx -s config_mon sot_lead fot brad emartin 8006724485\@archwireless.net";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.4\n\n"; # current version
@@ -1841,10 +1841,10 @@ if ( -s $evoutfile ) {
       print LOCK $_;
     }
     #print MAIL "Future violations will not be reported until rearmed by MTA.\n";
-    print MAIL "This message sent to sot_yellow_alert\n";
+    #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to brad swolk\n";
     #print MAIL "This message sent to brad1\n";
-    #print MAIL "This message sent to sot_lead\n";
+    print MAIL "This message sent to sot_lead fot emartin\n";
     #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";
     close MAIL;
     close LOCK;
