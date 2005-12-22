@@ -63,9 +63,9 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 
 # iru limits
 $airu1g1i_lim=200;
-$tephin_lim=99.00;  # 99F
+$tephin_lim=115.00;  # 99F
 $eph27v_lim=26.0;  # alert below 26V
-$ebox_lim=40.0; # ephin ebox 40C
+$ebox_lim=45.0; # ephin ebox 40C
 
 # pline temp limits
 $pline04_lim=42.5;  #lower limit F
@@ -1130,8 +1130,8 @@ $jj=0;
 for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
                                             # or it's really slow
   #print "EPH $i $#itimearr $mnframarr[$i] $eph27sarr[$i] $eph27varr[$i]\n"; # debuggggg
-  # send another alert if temp exceeds 102 F
-  if ( ($tephinarr[$i]) > 102.00 && $tephin102viol == 0) {
+  # send another alert if temp exceeds 120 F
+  if ( ($tephinarr[$i]) > 120.00 && $tephin102viol == 0) {
     $tephin102viol=1;
     close REPORT;  #start report over
     open REPORT, "> $eoutfile";
@@ -1758,7 +1758,7 @@ if ( -s $eoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad";
-    open MAIL, "|mailx -s config_mon sot_lead brad";
+    open MAIL, "|mailx -s config_mon sot_lead brad 6172573986\@mobile.mycingular.com";
     #open MAIL, "|mailx -s config_mon sot_red_alert\@head-cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
