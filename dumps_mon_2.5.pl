@@ -1758,7 +1758,7 @@ if ( -s $eoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad";
-    open MAIL, "|mailx -s config_mon sot_lead brad 6172573986\@mobile.mycingular.com";
+    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq brad 6172573986\@mobile.mycingular.com";
     #open MAIL, "|mailx -s config_mon sot_red_alert\@head-cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1783,7 +1783,7 @@ if ( -s $eoutfile ) {
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to sot_red_alert\n";
     #print MAIL "This message sent to brad swolk\n";  #turnbackon
-    print MAIL "This message sent to sot_lead\n";
+    #print MAIL "This message sent to sot_lead\n";
     #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
     close MAIL;
     close LOCK;
@@ -1820,7 +1820,7 @@ if ( -s $evoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad swolk";
-    open MAIL, "|mailx -s config_mon sot_lead fot brad emartin 8006724485\@archwireless.net";
+    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq fot brad emartin 8006724485\@archwireless.net";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.4\n\n"; # current version
@@ -1844,7 +1844,7 @@ if ( -s $evoutfile ) {
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to brad swolk\n";
     #print MAIL "This message sent to brad1\n";
-    print MAIL "This message sent to sot_lead fot emartin\n";
+    #print MAIL "This message sent to sot_lead fot emartin\n";
     #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";
     close MAIL;
     close LOCK;
