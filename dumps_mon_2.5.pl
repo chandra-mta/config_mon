@@ -1758,7 +1758,7 @@ if ( -s $eoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad";
-    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq brad 6172573986\@mobile.mycingular.com";
+    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq brad";
     #open MAIL, "|mailx -s config_mon sot_red_alert\@head-cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
     #open MAIL, "|more"; #debug
