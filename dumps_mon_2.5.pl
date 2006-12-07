@@ -1459,8 +1459,8 @@ close REPORT;
 #  E-mail violations, if any
 # *******************************************************************
 if ( -s "testfile.out" ) {
-  open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
-  print MAIL "config_mon_2.4 \n\n"; # current version
+  open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+  print MAIL "config_mon_2.5 \n\n"; # current version
   if ( -s $dumpname ) {
     open DNAME, "<$dumpname";
     while (<DNAME>) {
@@ -1482,9 +1482,9 @@ my $lockfile = "./.dumps_mon_lock";
 my $safefile = "/home/mta/Snap/.scs107alert";  # lock created by snapshot
 if ( -s $outfile ) {
   if ( -s $lockfile || -s $safefile ) {  # already sent, don't send again
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1504,12 +1504,12 @@ if ( -s $outfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon sot_lead\@head-cfa.harvard.edu brad jnichols";
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
-    #open MAIL, "|mail brad\@head-cfa.harvard.edu swolk\@head-cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1546,10 +1546,10 @@ unlink $outfile;
 $lockfile = "./.dumps_mon_acis_lock";
 if ( -s $aoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
-    #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu plucinsk";
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu acisdude";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1569,12 +1569,12 @@ if ( -s $aoutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon das plucinsk depasq brad swolk jnichols nadams goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
-    #open MAIL, "|mail brad\@head-cfa.harvard.edu swolk\@head-cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
+    #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1610,10 +1610,10 @@ unlink $aoutfile;
 $lockfile = "./.dumps_mon_deatemp_lock";
 if ( -s $doutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
-    #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu plucinsk";
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1633,12 +1633,12 @@ if ( -s $doutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon das plucinsk depasq brad swolk jnichols nadams goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
-    #open MAIL, "|mail brad\@head-cfa.harvard.edu swolk\@head-cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
+    #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1673,9 +1673,9 @@ unlink $doutfile;
 $lockfile = "./.dumps_mon_iru_lock";
 if ( -s $ioutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1695,11 +1695,11 @@ if ( -s $ioutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon brad\@head-cfa.harvard.edu 6172573986\@mobile.mycingular.com";
-    #open MAIL, "|mailx -s config_mon sot_red_alert\@head-cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    #open MAIL, "|mailx -s config_mon sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1737,7 +1737,7 @@ if ( -s $eoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "xconfig_mon_2.4 \n\n"; # current version
+    print MAIL "xconfig_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1757,12 +1757,12 @@ if ( -s $eoutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    #open MAIL, "|mailx -s config_mon brad";
-    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq brad";
-    #open MAIL, "|mailx -s config_mon sot_red_alert\@head-cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_red_alert\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1799,7 +1799,7 @@ if ( -s $evoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4 \n\n"; # current version
+    print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1819,11 +1819,11 @@ if ( -s $evoutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    #open MAIL, "|mailx -s config_mon brad swolk";
-    open MAIL, "|mailx -s config_mon  juda plucinsk aldcroft wap swolk das emk nadams jdepasq fot brad emartin 8006724485\@archwireless.net";
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu jdepasq\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8006724485\@archwireless.net";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1862,7 +1862,7 @@ $lockfile = "./.dumps_mon_mups_lock";
 if ( -s $poutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
-    print MAIL "xconfig_mon_2.4 \n\n"; # current version
+    print MAIL "xconfig_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
@@ -1882,10 +1882,10 @@ if ( -s $poutfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon sot_lead brad";
-    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head-cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
-    print MAIL "config_mon_2.4\n\n"; # current version
+    print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
       while (<DNAME>) {
