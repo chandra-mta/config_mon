@@ -76,6 +76,7 @@ $pline04_lim=42.5;  #lower limit F
 #  output file (temporary file, if non empty will be e-mailed)
 $outfile = "dumps_mon.out";
 $aoutfile = "dumps_mon_acis.out"; #temp out for acis violations
+$atoutfile = "dumps_mon_acis_temp.out"; #temp out for acis violations
 $ioutfile = "dumps_mon_iru.out"; #temp out for iru violations
 $eoutfile = "dumps_mon_eph.out"; #temp out for eph temp violations
 $evoutfile = "dumps_mon_ephv.out"; #temp out for eph voltage violations
@@ -1072,6 +1073,84 @@ for ( $j=0; $j<=$#akeys; $j++ ) {
 close REPORT;
 
 # ******************************************************************
+# acis extra checks
+open REPORT, "> $atoutfile";
+my %acish;
+foreach $file (@acisfiles) {
+
+  open ACISFILE, "$file" or die;
+
+  $hdr = <ACISFILE>;
+  chomp $hdr;
+  # Get column information on the input PRIMARYACIS file
+  @hdrline = split ("\t", $hdr);
+
+  my @inarr;
+  my $inline;
+
+  # remove whitespace line
+  $inline = <ACISFILE>;
+  # read acis data
+  while ( defined ($inline = <ACISFILE>)) {
+    chomp ($inline);
+    @inarr = split ("\t", $inline);
+    # fix acorn y2k bug
+    my @time = split (" ", $inarr[0]);
+    if ($time[0] < 1900) {
+      $time[0] = $time[0] + 1900;
+    }
+    $atime = join (":", @time);
+    my @tmptime = split ("::", $atime);
+    $atime = join (":", @tmptime);
+    push @{$acish{"$hdrline[0]"}}, $atime;
+    for ($acisi=1;$acisi<=$#hdrline;$acisi++) {
+      push @{$acish{"$hdrline[$acisi]"}},$inarr[$acisi];
+    } # for ($acisi=1;$acisi<=$#hdrline;$acisi++) {
+  } # read acis data
+
+  close ACISFILE;
+}
+open(ACISPAR,"<acis_temp.par");
+my %acispar;
+<ACISPAR>;
+<ACISPAR>;
+while (<ACISPAR>) {
+  chomp;
+  @parline=split; 
+  @acispar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0];
+} # while (<ACISPAR>) {
+close ACISPAR;
+
+$j = 0;
+open REPORT, "> $atoutfile";
+@akeys=keys(%acispar);
+@time=@{$acish{"TIME"}};
+for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
+  for ( $j=0; $j<=$#akeys; $j++ ) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acispar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 0) {
+      $acispar{$akeys[$j]}[4]=1;
+      $acispar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[6]=${$acish{"$akeys[$j]"}}[$i];
+    }
+    if ( ${$acish{"$akeys[$j]"}}[$i] ne "" && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[2] && ${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 1) {
+      $acispar{"$akeys[$j]"}[4]=0;
+      $tdiff = convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]);
+      print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acispar{\"$akeys[$j]\"}}[2] ${$acispar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
+      if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]) > 300 ) {
+        printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+        printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+      }
+    }
+  } #for ( $j=0; $j<=$keys; $j++ ) {
+} #for ( $i=0; $i<=$#acish; $i++ ) {
+for ( $j=0; $j<=$#akeys; $j++ ) {
+  if ( ${$acispar{"$akeys[$j]"}}[4] == 1) {
+    printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+  } #
+} #for ( $j=0; $j<=$keys; $j++ ) {
+close REPORT;
+
+# ******************************************************************
 # iru checks
 #  gyro current gets noisy above its limit, so we treat differently
 #   than the others.  Here look for 2-hour mode above the limit 
@@ -1547,7 +1626,7 @@ $lockfile = "./.dumps_mon_acis_lock";
 if ( -s $aoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu 6177216763\@vtext.com";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1602,6 +1681,69 @@ if ( -s $aoutfile ) {
   unlink $lockfile;
 }
 unlink $aoutfile;
+
+# *******************************************************************
+#  E-mail extra acis violations, if any
+# *******************************************************************
+#  E-mail violations, if any
+$lockfile = "./.dumps_mon_acis_temp_lock";
+if ( -s $atoutfile ) {
+  if ( -s $lockfile ) {  # already sent, don't send again
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177216763\@vtext.com";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    #open MAIL, "|more"; #debug
+    print MAIL "config_mon_2.5 \n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$atoutfile";
+    `date >> $lockfile`;
+    open LOCK, ">> $lockfile";
+    
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    print MAIL "This message sent to brad acisdude\n";
+    close MAIL;
+    close LOCK;
+  } else {  # first violation, tell someone
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177216763\@vtext.com";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com";
+    #open MAIL, "|more"; #debug
+    print MAIL "config_mon_2.5\n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$atoutfile";
+
+    `date > $lockfile`;
+    open LOCK, ">> $lockfile";
+
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    print MAIL "Future violations will not be reported until rearmed by MTA.\n";
+    #print MAIL "This message sent to sot_yellow_alert\n";
+    #print MAIL "This message sent to brad1\n";
+    close MAIL;
+    close LOCK;
+  }  #endelse
+
+} else { # no violation, rearm alert
+  unlink $lockfile;
+}
+unlink $atoutfile;
 
 # *******************************************************************
 #  E-mail acis dea hk temp violations, if any
