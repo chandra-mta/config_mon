@@ -1,7 +1,7 @@
 		Health & Safety 		Data Quality
 mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
-1CBAT		-70.50	-52.00	-75.50	-50.00	-63.00	-57.00	-75.50	-50.00	Camera Body Temp A 
-1CBBT		-70.50	-52.00	-75.50	-50.00	-63.00	-57.00	-75.50	-50.00	Camera Body Temp B 
+1CBAT		-70.50	-52.00	-74.00	-50.00	-63.00	-57.00	-74.00	-50.00	Camera Body Temp A 
+1CBBT		-70.50	-52.00	-74.00	-50.00	-63.00	-57.00	-74.00	-50.00	Camera Body Temp B 
 1CRAT		-137.00	-100.00	-142.00	-90.00	-130.00	-125.00	-142.00	-90.00	Cold Radiator Temp A  
 1CRBT		-137.00	-100.00	-142.00	-90.00	-130.00	-125.00	-142.00	-90.00	Cold Radiator Temp B  
 1DACTAT		68.00	75.00	65.00	80.00	68.00	75.00	65.00	80.00	DA Collimator-Top Temp A 
