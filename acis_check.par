@@ -45,7 +45,7 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1PDEABT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp B 
 1PIN1AT		-20.00	41.00	-36.50	46.00	-5.00	41.00	-36.50	46.00	PSMC Temp 1A 
 1SSMYT		-20.00	25.00	-37.50	40.50	8.00	20.00	-37.50	40.50	Suppt Structure -Y Panel Temp (RT811) 
-1SSPYT		-20.00	25.00	-37.50	40.50	8.00	20.00	-37.50	40.50	Suppt Structure +Y Panel Temp (RT810) 
+1SSPYT		-20.00	20.00	-37.50	40.50	8.00	20.00	-37.50	40.50	Suppt Structure +Y Panel Temp (RT810) 
 1VAHCAT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Close Actuator Temp A 
 1VAHCBT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Close Actuator Temp B 
 1VAHOAT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Open Actuator Temp A 
