@@ -1,15 +1,15 @@
 		Health & Safety 		Data Quality
 mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
-1CBAT		-70.50	-52.00	-74.00	-50.00	-63.00	-57.00	-74.00	-50.00	Camera Body Temp A 
-1CBBT		-70.50	-52.00	-74.00	-50.00	-63.00	-57.00	-74.00	-50.00	Camera Body Temp B 
+1CBAT		-70.50	-52.00	-74.00	-50.00	-70.50	-57.00	-74.00	-50.00	Camera Body Temp A 
+1CBBT		-70.50	-52.00	-74.00	-50.00	-70.50	-57.00	-74.00	-50.00	Camera Body Temp B 
 1CRAT		-137.00	-100.00	-142.00	-90.00	-130.00	-125.00	-142.00	-90.00	Cold Radiator Temp A  
 1CRBT		-137.00	-100.00	-142.00	-90.00	-130.00	-125.00	-142.00	-90.00	Cold Radiator Temp B  
 1DACTAT		68.00	75.00	65.00	80.00	68.00	75.00	65.00	80.00	DA Collimator-Top Temp A 
 1DACTBT		-40.00	-5.00	-52.50	0.00	-21.00	-5.00	-52.50	0.00	DA Collimator-Top Temp B 
 1DAHACU		-998.00	0.16	-999.00	999.00	-998.00	0.16	-999.00	999.00	Detector Assy. Htr Current A 
 1DAHAVO		-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	Detector Assy. Htr Voltage A 
-1DAHBCU		0.20	0.80	-999.00	999.00	0.20	0.80	-999.00	999.00	Detector Assy. Htr Current B  
-1DAHBVO		3.50	10.50	-999.00	999.00	3.50	10.50	-999.00	999.00	Detector Assy. Htr Voltage B 
+1DAHBCU		-999.00	0.80	-999.00	999.00	-999.00	0.80	-999.00	999.00	Detector Assy. Htr Current B  
+1DAHBVO		-999.00	10.50	-999.00	999.00	-999.00	10.50	-999.00	999.00	Detector Assy. Htr Voltage B 
 1DAHHAVO	-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	DA Housing Htr +28V Input A 
 1DAHHBVO	25.00	34.00	-999.00	999.00	25.00	34.00	-999.00	999.00	DA Housing Htr +28V Input B 
 1DE28AVO	26.00	34.00	-999.00	999.00	26.00	34.00	-999.00	999.00	DEA +28V Input A 
