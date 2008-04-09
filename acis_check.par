@@ -9,7 +9,7 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1DAHACU		-998.00	0.16	-999.00	999.00	-998.00	0.16	-999.00	999.00	Detector Assy. Htr Current A 
 1DAHAVO		-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	Detector Assy. Htr Voltage A 
 1DAHBCU		-999.00	0.20	-999.00	999.00	-999.00	0.20	-999.00	999.00	Detector Assy. Htr Current B  
-1DAHBVO		-999.00	 3.50	-999.00	999.00	-999.00	 3.50	-999.00	999.00	Detector Assy. Htr Voltage B 
+1DAHBVO		-999.00	 1.00	-999.00	999.00	-999.00	 1.00	-999.00	999.00	Detector Assy. Htr Voltage B 
 1DAHHAVO	-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	DA Housing Htr +28V Input A 
 1DAHHBVO	-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	DA Housing Htr +28V Input B 
 1DE28AVO	26.00	34.00	-999.00	999.00	26.00	34.00	-999.00	999.00	DEA +28V Input A 
