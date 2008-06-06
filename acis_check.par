@@ -39,8 +39,8 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1MAHCBT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Door Close Actuator Temp B 
 1MAHOAT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Door Open Actuator Temp A 
 1MAHOBT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Door Open Actuator Temp B 
-1OAHAT		-40.00	20.00	-56.50	36.50	-40.00	20.00	-56.50	36.50	Open Actuator Temp Cold, Side B 
-1OAHBT		-40.00	20.00	-56.50	36.50	-40.00	20.00	-56.50	36.50	Open Actuator Housing Temp, Side B 
+1OAHAT		-45.00	20.00	-56.50	36.50	-45.00	20.00	-56.50	36.50	Open Actuator Temp Cold, Side B 
+1OAHBT		-45.00	20.00	-56.50	36.50	-45.00	20.00	-56.50	36.50	Open Actuator Housing Temp, Side B 
 1PDEAAT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp A 
 1PDEABT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp B 
 1PIN1AT		-20.00	41.00	-36.50	46.00	-5.00	41.00	-36.50	46.00	PSMC Temp 1A 
