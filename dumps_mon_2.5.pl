@@ -53,7 +53,7 @@ $declim = 0.05;  # degrees
 $rolllim = 0.05; # degrees
 
 $spdlim = 52.4;  # reaction speed alert limt rad/sec
-$tratlim = 45 ;  # 3TRMTRAT (SIM temp) limit
+$tratlim = 60 ;  # 3TRMTRAT (SIM temp) limit
 #$spdlim = 205;  # test reaction speed alert limt rad/sec
 
 #  gratings parameters # inactive
