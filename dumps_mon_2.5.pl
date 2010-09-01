@@ -31,6 +31,7 @@ use Discrete;
 # 03/29/04 BS send HKP27V to sot_yellow_alert, resend TEPHIN if > 102 F
 # 06/03/04 BS added ephin 5EHSE300
 # 02/10/05 BS added PLINE04
+# 11/17/09 BS change EPHIN EBOX and TEPHIN limits
 
 # ************** Program Parameters ***************************
 
@@ -63,9 +64,9 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 
 # iru limits
 $airu1g1i_lim=200;
-$tephin_lim=115.00;  # 99F
+$tephin_lim=128.00;  # F
 $eph27v_lim=26.0;  # alert below 26V
-$ebox_lim=46.85; # ephin ebox 40C
+$ebox_lim=60.0; # C
 
 # pline temp limits
 $pline04_lim=42.5;  #lower limit F
@@ -1239,8 +1240,8 @@ for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
   } elsif ( ($eboxarr[$i]) < $ebox_lim && $eboxviol == 1) {
     $eboxviol = 0;
     if ( convert_time($itimearr[$i]) - convert_time($eboxtmptime) > $trectime ) {
-      printf REPORT " EPHIN EBOX (5EHSE300)   Violation at %19s Value: %7.2f Limit: \< %7.2f deg F\n", $eboxtmptime, $eboxtmppos, $ebox_lim;
-      printf REPORT " EPHIN EBOX (5EHSE300)   Recovery at %19s Value: %7.2f Limit: \< %7.2f deg F\n", $itimearr[$i], $eboxarr[$i], $ebox_lim;
+      printf REPORT " EPHIN EBOX (5EHSE300)   Violation at %19s Value: %7.2f Limit: \< %7.2f deg C\n", $eboxtmptime, $eboxtmppos, $ebox_lim;
+      printf REPORT " EPHIN EBOX (5EHSE300)   Recovery at %19s Value: %7.2f Limit: \< %7.2f deg C\n", $itimearr[$i], $eboxarr[$i], $ebox_lim;
     }
   } # if ( ($eboxarr[$i]) > $ebox_lim && $eboxviol == 0) {
 
@@ -1649,7 +1650,7 @@ if ( -s $aoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
+    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu gregg\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1776,7 +1777,7 @@ if ( -s $doutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu";
+    open MAIL, "|mailx -s config_mon das\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu goeke\@space.mit.edu eab\@space.mit.edu buehler\@space.mit.edu gregg\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1900,7 +1901,7 @@ if ( -s $eoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu depasq\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu gregg\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_red_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1962,7 +1963,7 @@ if ( -s $evoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu jdepasq\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8006724485\@archwireless.net";
+    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu emk\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8006724485\@archwireless.net gregg\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5\n\n"; # current version
