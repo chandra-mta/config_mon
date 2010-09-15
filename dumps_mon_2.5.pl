@@ -32,6 +32,7 @@ use Discrete;
 # 06/03/04 BS added ephin 5EHSE300
 # 02/10/05 BS added PLINE04
 # 11/17/09 BS change EPHIN EBOX and TEPHIN limits
+# 09/15/10 BS report max/mins in alerts
 
 # ************** Program Parameters ***************************
 
@@ -55,6 +56,7 @@ $rolllim = 0.05; # degrees
 
 $spdlim = 52.4;  # reaction speed alert limt rad/sec
 $tratlim = 60 ;  # 3TRMTRAT (SIM temp) limit
+$tratmax = 60 ;  # 3TRMTRAT (SIM temp) limit
 #$spdlim = 205;  # test reaction speed alert limt rad/sec
 
 #  gratings parameters # inactive
@@ -65,6 +67,7 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 # iru limits
 $airu1g1i_lim=200;
 $tephin_lim=128.00;  # F
+$tephin_max=128.00;  # F
 $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=60.0; # C
 
@@ -763,6 +766,11 @@ for ( $i=0; $i<$#timearr; $i++ ) {
   #}
 
   ######### check SIM temp ########
+  if ( ($tratarr[$i]) > $tratmax) {
+    $tratmax = $tratarr[$i];
+    $tratmaxtime = $timearr[$i];
+    $tratmaxpos = $tratarr[$i];
+  }
   if ( ($tratarr[$i]) > $tratlim && $tratviol == 0) {
     $tratviol = 1;
     $trattmptime = $timearr[$i];
@@ -771,6 +779,7 @@ for ( $i=0; $i<$#timearr; $i++ ) {
     $tratviol = 0;
     if ( convert_time($timearr[$i]) - convert_time($trattmptime) > $rectime ) {
       printf REPORT " 3TRMTRAT    Violation at %19s Actual: %4.1f Expected: \< %4.1f deg C\n", $trattmptime, $trattmppos, $tratlim;
+      printf REPORT " 3TRMTRAT    Maximum temperature at %19s Value: %4.1f deg C\n", $tratmaxtime, $tratmaxpos;
       printf REPORT " 3TRMTRAT    Recovery at %19s Actual: %4.1f Expected: \< %4.1f deg C\n", $timearr[$i], $tratarr[$i], $tratlim;
     }
   }
@@ -1221,6 +1230,11 @@ for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
     }
   }
     
+  if ( ($tephinarr[$i]) > $tephin_max) {
+    $tephin_max = $tephinarr[$i];
+    $tephinmaxtime = $itimearr[$i];
+    $tephinmaxpos = $tephinarr[$i];
+  }
   if ( ($tephinarr[$i]) > $tephin_lim && $tephinviol == 0) {
     $tephinviol = 1;
     $tephintmptime = $itimearr[$i];
@@ -1229,6 +1243,7 @@ for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
     $tephinviol = 0;
     if ( convert_time($itimearr[$i]) - convert_time($tephintmptime) > $trectime ) {
       printf REPORT " TEPHIN    Violation at %19s Value: %7.2f Limit: \< %7.2f deg F\n", $tephintmptime, $tephintmppos, $tephin_lim;
+      printf REPORT " TEPHIN    Maximum Violation at %19s Value: %7.2f deg F\n", $tephinmaxtime, $tephinmaxpos;
       printf REPORT " TEPHIN    Recovery at %19s Value: %7.2f Limit: \< %7.2f deg F\n", $itimearr[$i], $tephinarr[$i], $tephin_lim;
     }
   } # if ( ($tephinarr[$i]) > $tephin_lim && $tephinviol == 0) {
