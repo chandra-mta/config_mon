@@ -1083,6 +1083,7 @@ for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
 for ( $j=0; $j<=$#akeys; $j++ ) {
   if ( ${$acispar{"$akeys[$j]"}}[4] == 1) {
     printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+    printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
   } #
 } #for ( $j=0; $j<=$keys; $j++ ) {
 close REPORT;
@@ -1289,6 +1290,7 @@ for ( $i=0; $i<$#itimearr; $i+=2 ) {  # check every 200th data point
 } # for ( $i=0; $i<$#itimearr; $i++ ) {
 if ( $tephinviol == 1 ) {
       printf REPORT " TEPHIN    Violation at %19s Value: %7.2f Limit: \< %7.2f deg F\n", $tephintmptime, $tephintmppos, $tephin_lim;
+      printf REPORT " TEPHIN    Maximum Violation at %19s Value: %7.2f deg F\n", $tephinmaxtime, $tephinmaxpos;
 }
 if ( $eboxviol == 1 ) {
       printf REPORT " EPHIN EBOX (5EHSE300)    Violation at %19s Value: %7.2f Limit: \< %7.2f deg C\n", $eboxtmptime, $eboxtmppos, $ebox_lim;
