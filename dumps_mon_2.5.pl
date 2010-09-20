@@ -66,8 +66,8 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 
 # iru limits
 $airu1g1i_lim=200;
-$tephin_lim=128.00;  # F
-$tephin_max=128.00;  # F
+$tephin_lim=131.00;  # F
+$tephin_max=131.00;  # F
 $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=60.0; # C
 
@@ -1049,7 +1049,7 @@ my %acispar;
 while (<ACISPAR>) {
   chomp;
   @parline=split; 
-  @acispar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0];
+  @acispar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0,0,$parline[6]];
 } # while (<ACISPAR>) {
 close ACISPAR;
 
@@ -1059,6 +1059,10 @@ open REPORT, "> $aoutfile";
 @time=@{$acish{"TIME"}};
 for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
   for ( $j=0; $j<=$#akeys; $j++ ) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8]) {
+      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    }
     if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acispar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 0) {
       $acispar{$akeys[$j]}[4]=1;
       $acispar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
@@ -1070,6 +1074,7 @@ for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
       print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acispar{\"$akeys[$j]\"}}[2] ${$acispar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
       if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]) > 300 ) {
         printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+        printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
         printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
       }
     }
