@@ -1059,7 +1059,11 @@ open REPORT, "> $aoutfile";
 @time=@{$acish{"TIME"}};
 for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
   for ( $j=0; $j<=$#akeys; $j++ ) {
-    if ( ${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8]) {
+    if ( (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8])) {
+      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    }
+    if ( (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[8])) {
       $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
       $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
     }
@@ -1410,7 +1414,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk1viol = 0;
     if ( $dttimearr[$i] - $deat1intmptime > $rectime ) {
       printf REPORT "DPAHK1 BEP PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat1intmptime u s u d`, $deat1intmppos, $deat1min, $deat1max;
-      printf REPORT " DPAHK1    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp1maxtime, $deatemp1maxpos;
+      printf REPORT " DPAHK1    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp1maxtime u s u d`, $deatemp1maxpos;
       printf REPORT "DPAHK1  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp1[$i], $deat1min, $deat1max;
     }
   }
@@ -1429,7 +1433,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk2viol = 0;
     if ( $dttimearr[$i] - $deat2intmptime > $rectime ) {
       printf REPORT "DPAHK2 BEP Oscillator Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat2intmptime u s u d`, $deat2intmppos, $deat2min, $deat2max;
-      printf REPORT " DPAHK2    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp2maxtime, $deatemp2maxpos;
+      printf REPORT " DPAHK2    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp2maxtime u s u d`, $deatemp2maxpos;
       printf REPORT "DPAHK2  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp2[$i], $deat2min, $deat2max;
     }
   }
@@ -1448,7 +1452,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk3viol = 0;
     if ( $dttimearr[$i] - $deat3intmptime > $rectime ) {
       printf REPORT "DPAHK3 FEP 0 Mongoose Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat3intmptime u s u d`, $deat3intmppos, $deat3min, $deat3max;
-      printf REPORT " DPAHK3    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp3maxtime, $deatemp3maxpos;
+      printf REPORT " DPAHK3    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp3maxtime u s u d`, $deatemp3maxpos;
       printf REPORT "DPAHK3  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp3[$i], $deat3min, $deat3max;
     }
   }
@@ -1467,7 +1471,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk4viol = 0;
     if ( $dttimearr[$i] - $deat4intmptime > $rectime ) {
       printf REPORT "DPAHK4 FEP 0 PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat4intmptime u s u d`, $deat4intmppos, $deat4min, $deat4max;
-      printf REPORT " DPAHK4    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp4maxtime, $deatemp4maxpos;
+      printf REPORT " DPAHK4    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp4maxtime u s u d`, $deatemp4maxpos;
       printf REPORT "DPAHK4  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp4[$i], $deat4min, $deat4max;
     }
   }
@@ -1486,7 +1490,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk5viol = 0;
     if ( $dttimearr[$i] - $deat5intmptime > $rectime ) {
       printf REPORT "DPAHK5 FEP 0 ACTEL Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat5intmptime u s u d`, $deat5intmppos, $deat5min, $deat5max;
-      printf REPORT " DPAHK5    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp5maxtime, $deatemp5maxpos;
+      printf REPORT " DPAHK5    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp5maxtime u s u d`, $deatemp5maxpos;
       printf REPORT "DPAHK5  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp5[$i], $deat5min, $deat5max;
     }
   }
@@ -1505,7 +1509,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk6viol = 0;
     if ( $dttimearr[$i] - $deat6intmptime > $rectime ) {
       printf REPORT "DPAHK6 FEP 0 RAM Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat6intmptime u s u d`, $deat6intmppos, $deat6min, $deat6max;
-      printf REPORT " DPAHK6    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp6maxtime, $deatemp6maxpos;
+      printf REPORT " DPAHK6    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp6maxtime u s u d`, $deatemp6maxpos;
       printf REPORT "DPAHK6  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp6[$i], $deat6min, $deat6max;
     }
   }
@@ -1524,7 +1528,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk7viol = 0;
     if ( $dttimearr[$i] - $deat7intmptime > $rectime ) {
       printf REPORT "DPAHK7 FEP 0 Frame Buf. Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat7intmptime u s u d`, $deat7intmppos, $deat7min, $deat7max;
-      printf REPORT " DPAHK7    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp7maxtime, $deatemp7maxpos;
+      printf REPORT " DPAHK7    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp7maxtime u s u d`, $deatemp7maxpos;
       printf REPORT "DPAHK7  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp7[$i], $deat7min, $deat7max;
     }
   }
@@ -1543,7 +1547,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk8viol = 0;
     if ( $dttimearr[$i] - $deat8intmptime > $rectime ) {
       printf REPORT "DPAHK8 FEP 1 Mongoose Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat8intmptime u s u d`, $deat8intmppos, $deat8min, $deat8max;
-      printf REPORT " DPAHK8    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp8maxtime, $deatemp8maxpos;
+      printf REPORT " DPAHK8    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp8maxtime u s u d`, $deatemp8maxpos;
       printf REPORT "DPAHK8  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp8[$i], $deat8min, $deat8max;
     }
   }
@@ -1562,7 +1566,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk9viol = 0;
     if ( $dttimearr[$i] - $deat9intmptime > $rectime ) {
       printf REPORT "DPAHK9 FEP 1 PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat9intmptime u s u d`, $deat9intmppos, $deat9min, $deat9max;
-      printf REPORT " DPAHK9    Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp9maxtime, $deatemp9maxpos;
+      printf REPORT " DPAHK9    Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp9maxtime u s u d`, $deatemp9maxpos;
       printf REPORT "DPAHK9  Recovery at %19s Value: %7.2f \n", `axTime3 $dttimearr[$i] u s u d`, $deatemp9[$i], $deat9min, $deat9max;
     }
   }
@@ -1581,7 +1585,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk10viol = 0;
     if ( $dttimearr[$i] - $deat10intmptime > $rectime ) {
       printf REPORT "DPAHK10 FEP 1 ACTEL Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat10intmptime u s u d`, $deat10intmppos, $deat10min, $deat10max;
-      printf REPORT " DPAHK10   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp10maxtime, $deatemp10maxpos;
+      printf REPORT " DPAHK10   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp10maxtime u s u d`, $deatemp10maxpos;
       printf REPORT "DPAHK10  Recovery at %19s Value: %7.2f\n", `axTime3 $dttimearr[$i] u s u d`, $deatemp10[$i], $deat10min, $deat10max;
     }
   }
@@ -1600,7 +1604,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk11viol = 0;
     if ( $dttimearr[$i] - $deat11intmptime > $rectime ) {
       printf REPORT "DPAHK11 FEP 1 RAM Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat11intmptime u s u d`, $deat11intmppos, $deat11min, $deat11max;
-      printf REPORT " DPAHK11   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp11maxtime, $deatemp11maxpos;
+      printf REPORT " DPAHK11   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp11maxtime u s u d`, $deatemp11maxpos;
       printf REPORT "DPAHK11  Recovery at %19s Value: %7.2f\n", `axTime3 $dttimearr[$i] u s u d`, $deatemp11[$i], $deat11min, $deat11max;
     }
   }
@@ -1619,7 +1623,7 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
     $deahk12viol = 0;
     if ( $dttimearr[$i] - $deat12intmptime > $rectime ) {
       printf REPORT "DPAHK12 FEP 1 Frame Buf. Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat12intmptime u s u d`, $deat12intmppos, $deat12min, $deat12max;
-      printf REPORT " DPAHK12   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp12maxtime, $deatemp12maxpos;
+      printf REPORT " DPAHK12   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp12maxtime u s u d`, $deatemp12maxpos;
       printf REPORT "DPAHK12  Recovery at %19s Value: %7.2f\n", `axTime3 $dttimearr[$i] u s u d`, $deatemp12[$i], $deat12min, $deat12max;
     }
   }
@@ -1628,51 +1632,51 @@ for ( $i=0; $i<$#dttimearr; $i++ ) {
 # Report violations that do not exhibit recovery
 if ( $deahk1viol == 1 ) {
       printf REPORT "DPAHK1 BEP PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat1intmptime u s u d`, $deat1intmppos, $deat1min, $deat1max;
-      printf REPORT " DPAHK1   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp1maxtime, $deatemp1maxpos;
+      printf REPORT " DPAHK1   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp1maxtime u s u d`, $deatemp1maxpos;
 }
 if ( $deahk2viol == 2 ) {
       printf REPORT "DPAHK2 BEP Oscillator Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat2intmptime u s u d`, $deat2intmppos, $deat2min, $deat2max;
-      printf REPORT " DPAHK2   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp2maxtime, $deatemp2maxpos;
+      printf REPORT " DPAHK2   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp2maxtime u s u d`, $deatemp2maxpos;
 }
 if ( $deahk3viol == 1 ) {
       printf REPORT "DPAHK3 FEP 0 Mongoose Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat3intmptime u s u d`, $deat3intmppos, $deat3min, $deat3max;
-      printf REPORT " DPAHK3   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp3maxtime, $deatemp3maxpos;
+      printf REPORT " DPAHK3   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp3maxtime u s u d`, $deatemp3maxpos;
 }
 if ( $deahk4viol == 1 ) {
       printf REPORT "DPAHK4 FEP 0 PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat4intmptime u s u d`, $deat4intmppos, $deat4min, $deat4max;
-      printf REPORT " DPAHK4   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp4maxtime, $deatemp4maxpos;
+      printf REPORT " DPAHK4   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp4maxtime u s u d`, $deatemp4maxpos;
 }
 if ( $deahk5viol == 1 ) {
       printf REPORT "DPAHK5 FEP 0 ACTEL Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat5intmptime u s u d`, $deat5intmppos, $deat5min, $deat5max;
-      printf REPORT " DPAHK5   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp5maxtime, $deatemp5maxpos;
+      printf REPORT " DPAHK5   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp5maxtime u s u d`, $deatemp5maxpos;
 }
 if ( $deahk6viol == 1 ) {
       printf REPORT "DPAHK6 FEP 0 RAM Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat6intmptime u s u d`, $deat6intmppos, $deat6min, $deat6max;
-      printf REPORT " DPAHK6   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp6maxtime, $deatemp6maxpos;
+      printf REPORT " DPAHK6   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp6maxtime u s u d`, $deatemp6maxpos;
 }
 if ( $deahk7viol == 1 ) {
       printf REPORT "DPAHK7 FEP 0 Frame Buf. Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat7intmptime u s u d`, $deat7intmppos, $deat7min, $deat7max;
-      printf REPORT " DPAHK7   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp7maxtime, $deatemp7maxpos;
+      printf REPORT " DPAHK7   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp7maxtime u s u d`, $deatemp7maxpos;
 }
 if ( $deahk8viol == 1 ) {
       printf REPORT "DPAHK8 FEP 1 Mongoose Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat8intmptime u s u d`, $deat8intmppos, $deat8min, $deat8max;
-      printf REPORT " DPAHK8   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp8maxtime, $deatemp8maxpos;
+      printf REPORT " DPAHK8   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp8maxtime u s u d`, $deatemp8maxpos;
 }
 if ( $deahk9viol == 1 ) {
       printf REPORT "DPAHK9 FEP 1 PC Board Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat9intmptime u s u d`, $deat9intmppos, $deat9min, $deat9max;
-      printf REPORT " DPAHK9   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp9maxtime, $deatemp9maxpos;
+      printf REPORT " DPAHK9   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp9maxtime u s u d`, $deatemp9maxpos;
 }
 if ( $deahk10viol == 1 ) {
       printf REPORT "DPAHK10 FEP 1 ACTEL Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat10intmptime u s u d`, $deat10intmppos, $deat10min, $deat10max;
-      printf REPORT " DPAHK10   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp10maxtime, $deatemp10maxpos;
+      printf REPORT " DPAHK10   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp10maxtime u s u d`, $deatemp10maxpos;
 }
 if ( $deahk11viol == 1 ) {
       printf REPORT "DPAHK11 FEP 1 RAM Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat11intmptime u s u d`, $deat11intmppos, $deat11min, $deat11max;
-      printf REPORT " DPAHK11   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp11maxtime, $deatemp11maxpos;
+      printf REPORT " DPAHK11   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp11maxtime u s u d`, $deatemp11maxpos;
 }
 if ( $deahk12viol == 1 ) {
       printf REPORT "DPAHK12 FEP 1 Frame Buf. Violation at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f C\n", `axTime3 $deat12intmptime u s u d`, $deat12intmppos, $deat12min, $deat12max;
-      printf REPORT " DPAHK12   Max/Min Violation at %19s Value: %7.2f deg F\n", $deatemp12maxtime, $deatemp12maxpos;
+      printf REPORT " DPAHK12   Max/Min Violation at %19s Value: %7.2f deg F\n", `axTime3 $deatemp12maxtime u s u d`, $deatemp12maxpos;
 }
 
 close REPORT;
@@ -1770,6 +1774,7 @@ if ( -s $aoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
     open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon_test brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
