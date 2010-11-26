@@ -1059,11 +1059,11 @@ open REPORT, "> $aoutfile";
 @time=@{$acish{"TIME"}};
 for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
   for ( $j=0; $j<=$#akeys; $j++ ) {
-    if ( (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8])) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8])) {
       $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
       $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
     }
-    if ( (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[8])) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[8])) {
       $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
       $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
     }
