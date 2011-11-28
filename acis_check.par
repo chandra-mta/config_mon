@@ -2,8 +2,8 @@
 mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1CBAT		-72.30	-52.00	-74.70	-50.00	-72.30	-57.00	-74.70	-50.00	Camera Body Temp A 
 1CBBT		-72.30	-52.00	-74.70	-50.00	-72.30	-57.00	-74.70	-50.00	Camera Body Temp B 
-1CRAT		-137.00	-100.00	-142.00	-90.00	-130.00	-120.00	-142.00	-90.00	Cold Radiator Temp A  
-1CRBT		-137.00	-100.00	-142.00	-90.00	-130.00	-120.00	-142.00	-90.00	Cold Radiator Temp B  
+1CRAT		-137.00	-90.00	-142.00	-80.00	-130.00	-90.00	-142.00	-80.00	Cold Radiator Temp A  
+1CRBT		-137.00	-90.00	-142.00	-80.00	-130.00	-90.00	-142.00	-80.00	Cold Radiator Temp B  
 1DACTAT		68.00	75.00	65.00	80.00	68.00	75.00	65.00	80.00	DA Collimator-Top Temp A 
 1DACTBT		-40.00	-5.00	-52.50	0.00	-21.00	-5.00	-52.50	0.00	DA Collimator-Top Temp B 
 1DAHACU		-998.00	0.16	-999.00	999.00	-998.00	0.16	-999.00	999.00	Detector Assy. Htr Current A 
@@ -44,11 +44,11 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1PDEAAT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp A 
 1PDEABT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp B 
 1PIN1AT		-20.00	41.00	-36.50	46.00	-5.00	41.00	-36.50	46.00	PSMC Temp 1A 
-1SSMYT		-20.00	30.00	-37.50	40.50	8.00	30.00	-37.50	40.50	Suppt Structure -Y Panel Temp (RT811) 
-1SSPYT		-20.00	25.00	-37.50	40.50	8.00	25.00	-37.50	40.50	Suppt Structure +Y Panel Temp (RT810) 
+1SSMYT		-20.00	35.00	-37.50	40.50	8.00	35.00	-37.50	40.50	Suppt Structure -Y Panel Temp (RT811) 
+1SSPYT		-20.00	35.00	-37.50	40.50	8.00	35.00	-37.50	40.50	Suppt Structure +Y Panel Temp (RT810) 
 1VAHCAT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Close Actuator Temp A 
 1VAHCBT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Close Actuator Temp B 
 1VAHOAT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Open Actuator Temp A 
 1VAHOBT		210.00	998.00	200.00	999.00	210.00	998.00	200.00	999.00	Vent Valve Open Actuator Temp B 
-1WRAT		-90.00	-70.00	-103.50	-60.00	-90.00	-75.00	-103.50	-60.00	Warm Radiator Temp A 
-1WRBT		-90.00	-70.00	-103.50	-60.00	-90.00	-75.00	-103.50	-60.00	Warm Radiator Temp B 
+1WRAT		-90.00	-60.00	-103.50	-50.00	-90.00	-60.00	-103.50	-50.00	Warm Radiator Temp A 
+1WRBT		-90.00	-60.00	-103.50	-50.00	-90.00	-60.00	-103.50	-50.00	Warm Radiator Temp B 
