@@ -1731,10 +1731,10 @@ if ( -s $outfile ) {
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
+    ###test 12/06/11open MAIL, "|mailx -s config_mon sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
