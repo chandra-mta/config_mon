@@ -81,6 +81,7 @@ $pline04_lim=42.5;  #lower limit F
 #  output file (temporary file, if non empty will be e-mailed)
 $outfile = "dumps_mon.out";
 $aoutfile = "dumps_mon_acis.out"; #temp out for acis violations
+$acafile = "dumps_mon_aca.out"; #temp out for acis violations
 $atoutfile = "dumps_mon_acis_temp.out"; #temp out for acis violations
 $ioutfile = "dumps_mon_iru.out"; #temp out for iru violations
 $eoutfile = "dumps_mon_eph.out"; #temp out for eph temp violations
@@ -1043,6 +1044,57 @@ foreach $file (@acisfiles) {
 
   close ACISFILE;
 }
+open(ACAPAR,"<aca_check.par");
+my %acapar;
+<ACAPAR>;
+<ACAPAR>;
+while (<ACAPAR>) {
+  chomp;
+  @parline=split; 
+  @acapar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0,0,$parline[6]];
+} # while (<ACISPAR>) {
+close ACAPAR;
+
+$j = 0;
+open REPORT, "> $acafile";
+@akeys=keys(%acapar);
+@time=@{$acish{"TIME"}};
+for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
+  for ( $j=0; $j<=$#akeys; $j++ ) {
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8])) {
+      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    }
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[8])) {
+      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    }
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acispar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 0) {
+      $acispar{$akeys[$j]}[4]=1;
+      $acispar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
+      $acispar{$akeys[$j]}[6]=${$acish{"$akeys[$j]"}}[$i];
+    }
+    if ( ${$acish{"$akeys[$j]"}}[$i] ne "" && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[2] && ${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 1) {
+      $acispar{"$akeys[$j]"}[4]=0;
+      $tdiff = convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]);
+      print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acispar{\"$akeys[$j]\"}}[2] ${$acispar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
+      if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]) > 300 ) {
+        printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[3];
+        printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
+        printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+      }
+    }
+  } #for ( $j=0; $j<=$keys; $j++ ) {
+} #for ( $i=0; $i<=$#acish; $i++ ) {
+for ( $j=0; $j<=$#akeys; $j++ ) {
+  if ( ${$acispar{"$akeys[$j]"}}[4] == 1) {
+    printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[3];
+    printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
+  } #
+} #for ( $j=0; $j<=$keys; $j++ ) {
+close REPORT;
+# ----------- end aca checks
+
 open(ACISPAR,"<acis_check.par");
 my %acispar;
 <ACISPAR>;
@@ -1766,6 +1818,63 @@ if ( -s $outfile ) {
 }
 unlink $outfile;
 
+# *******************************************************************
+#  E-mail aca violations, if any
+# *******************************************************************
+#  E-mail violations, if any
+$lockfile = "./.dumps_mon_aca_lock";
+if ( -s $acafile ) {
+  if ( -s $lockfile ) {  # already sent, don't send again
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_test brad\@head.cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    print MAIL "config_mon_2.5 \n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$acafile";
+    `date >> $lockfile`;
+    open LOCK, ">> $lockfile";
+    
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    close MAIL;
+    close LOCK;
+  } else {  # first violation, tell someone
+    #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    #open MAIL, "|more"; #debug
+    print MAIL "config_mon_2.5\n\n"; # current version
+    if ( -s $dumpname ) {
+      open DNAME, "<$dumpname";
+      while (<DNAME>) {
+        print MAIL $_;
+      }
+    }
+    print MAIL "\n";
+    open REPORT, "<$acafile";
+
+    `date > $lockfile`;
+    open LOCK, ">> $lockfile";
+
+    while (<REPORT>) {
+      print MAIL $_;
+      print LOCK $_;
+    }
+    close MAIL;
+    close LOCK;
+  }  #endelse
+
+} else { # no violation, rearm alert
+  unlink $lockfile;
+}
+unlink $acafile;
 # *******************************************************************
 #  E-mail acis violations, if any
 # *******************************************************************
