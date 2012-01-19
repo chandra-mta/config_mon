@@ -1061,35 +1061,36 @@ open REPORT, "> $acafile";
 @time=@{$acish{"TIME"}};
 for ( $i=0; $i<=$#{$acish{TIME}}; $i++ ) {
   for ( $j=0; $j<=$#akeys; $j++ ) {
-    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[8])) {
-      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
-      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    $acish{AACCCDPT}[$i] = (${$acish{AACCCDPT}}[$i] - 32)*5/9;
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] > ${$acapar{"$akeys[$j]"}}[3]) && (${$acish{"$akeys[$j]"}}[$i] > ${$acapar{"$akeys[$j]"}}[8])) {
+      $acapar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acapar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
     }
-    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[8])) {
-      $acispar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
-      $acispar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] < ${$acapar{"$akeys[$j]"}}[2]) && (${$acish{"$akeys[$j]"}}[$i] < ${$acapar{"$akeys[$j]"}}[8])) {
+      $acapar{$akeys[$j]}[7]=${$acish{"TIME"}}[$i];
+      $acapar{$akeys[$j]}[8]=${$acish{"$akeys[$j]"}}[$i];
     }
-    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acispar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 0) {
-      $acispar{$akeys[$j]}[4]=1;
-      $acispar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
-      $acispar{$akeys[$j]}[6]=${$acish{"$akeys[$j]"}}[$i];
+    if ( ${$acish{"$akeys[$j]"}}[$i] != 0 && (${$acish{"$akeys[$j]"}}[$i] <= ${$acapar{"$akeys[$j]"}}[2] || ${$acish{"$akeys[$j]"}}[$i] >= ${$acapar{"$akeys[$j]"}}[3]) && ${$acapar{"$akeys[$j]"}}[4] == 0) {
+      $acapar{$akeys[$j]}[4]=1;
+      $acapar{$akeys[$j]}[5]=${$acish{"TIME"}}[$i];
+      $acapar{$akeys[$j]}[6]=${$acish{"$akeys[$j]"}}[$i];
     }
-    if ( ${$acish{"$akeys[$j]"}}[$i] ne "" && (${$acish{"$akeys[$j]"}}[$i] > ${$acispar{"$akeys[$j]"}}[2] && ${$acish{"$akeys[$j]"}}[$i] < ${$acispar{"$akeys[$j]"}}[3]) && ${$acispar{"$akeys[$j]"}}[4] == 1) {
-      $acispar{"$akeys[$j]"}[4]=0;
-      $tdiff = convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]);
-      print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acispar{\"$akeys[$j]\"}}[2] ${$acispar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
-      if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acispar{"$akeys[$j]"}}[5]) > 300 ) {
-        printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[3];
-        printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
-        printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Data Quality limits: %7.2f,%7.2f Health & Safety limits: %7.2f,%7.2f\n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acispar{"$akeys[$j]"}}[2],${$acispar{"$akeys[$j]"}}[3],${$acispar{"$akeys[$j]"}}[0],${$acispar{"$akeys[$j]"}}[1];
+    if ( ${$acish{"$akeys[$j]"}}[$i] ne "" && (${$acish{"$akeys[$j]"}}[$i] > ${$acapar{"$akeys[$j]"}}[2] && ${$acish{"$akeys[$j]"}}[$i] < ${$acapar{"$akeys[$j]"}}[3]) && ${$acapar{"$akeys[$j]"}}[4] == 1) {
+      $acapar{"$akeys[$j]"}[4]=0;
+      $tdiff = convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acapar{"$akeys[$j]"}}[5]);
+      print "\n $j $i ${$acish{\"$akeys[$j]\"}}[$i] ${$acapar{\"$akeys[$j]\"}}[2] ${$acapar{\"$akeys[$j]\"}}[3] $akeys[$j]\n";
+      if ( convert_time(${$acish{"TIME"}}[$i]) - convert_time(${$acapar{"$akeys[$j]"}}[5]) > 300 ) {
+        printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acapar{"$akeys[$j]"}}[5],${$acapar{"$akeys[$j]"}}[6],${$acapar{"$akeys[$j]"}}[3];
+        printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acapar{"$akeys[$j]"}}[7],${$acapar{"$akeys[$j]"}}[8];
+        printf REPORT "$akeys[$j]  Recovery at %19s Value: %7.2f Limit: %7.2f \n", ${$acish{"TIME"}}[$i],${$acish{"$akeys[$j]"}}[$i],${$acapar{"$akeys[$j]"}}[3];
       }
     }
   } #for ( $j=0; $j<=$keys; $j++ ) {
 } #for ( $i=0; $i<=$#acish; $i++ ) {
 for ( $j=0; $j<=$#akeys; $j++ ) {
-  if ( ${$acispar{"$akeys[$j]"}}[4] == 1) {
-    printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acispar{"$akeys[$j]"}}[5],${$acispar{"$akeys[$j]"}}[6],${$acispar{"$akeys[$j]"}}[3];
-    printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acispar{"$akeys[$j]"}}[7],${$acispar{"$akeys[$j]"}}[8];
+  if ( ${$acapar{"$akeys[$j]"}}[4] == 1) {
+    printf REPORT "$akeys[$j]  Violation at %19s Value: %7.2f Limit: %7.2f \n", ${$acapar{"$akeys[$j]"}}[5],${$acapar{"$akeys[$j]"}}[6],${$acapar{"$akeys[$j]"}}[3];
+    printf REPORT "$akeys[$j]  Maximum Violation at %19s Value: %7.2f\n", ${$acapar{"$akeys[$j]"}}[7],${$acapar{"$akeys[$j]"}}[8];
   } #
 } #for ( $j=0; $j<=$keys; $j++ ) {
 close REPORT;
@@ -1826,7 +1827,7 @@ $lockfile = "./.dumps_mon_aca_lock";
 if ( -s $acafile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_test brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1848,7 +1849,8 @@ if ( -s $acafile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu,taldcroft,emartin,jeanconn";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5\n\n"; # current version
     if ( -s $dumpname ) {
