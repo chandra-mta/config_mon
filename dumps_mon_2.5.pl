@@ -67,8 +67,8 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 
 # iru limits
 $airu1g1i_lim=200;
-$tephin_lim=140.00;  # F
-$tephin_max=140.00;  # F
+$tephin_lim=138.00;  # F
+$tephin_max=138.00;  # F
 $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=65.0; # C
 
@@ -2222,7 +2222,7 @@ if ( -s $evoutfile ) {
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu  8572591479@vtext.com gregg\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon juda\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu aldcroft\@head.cfa.harvard.edu wap\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu das\@head.cfa.harvard.edu nadams\@head.cfa.harvard.edu fot\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu emartin\@head.cfa.harvard.edu 8006724485\@archwireless.net gregg\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5\n\n"; # current version
