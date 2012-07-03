@@ -67,8 +67,8 @@ $gratlim = 10;    # allowable disagreement between A and B readings
 
 # iru limits
 $airu1g1i_lim=200;
-$tephin_lim=138.00;  # F
-$tephin_max=138.00;  # F
+$tephin_lim=144.00;  # F
+$tephin_max=144.00;  # F
 $eph27v_lim=26.0;  # alert below 26V
 $ebox_lim=65.0; # C
 
