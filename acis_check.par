@@ -5,7 +5,7 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1CRAT		-137.00	-90.00	-142.00	-80.00	-130.00	-90.00	-142.00	-80.00	Cold Radiator Temp A  
 1CRBT		-137.00	-90.00	-142.00	-80.00	-130.00	-90.00	-142.00	-80.00	Cold Radiator Temp B  
 1DACTAT		68.00	75.00	65.00	80.00	68.00	75.00	65.00	80.00	DA Collimator-Top Temp A 
-1DACTBT		-40.00	-5.00	-52.50	0.00	-21.00	-5.00	-52.50	0.00	DA Collimator-Top Temp B 
+1DACTBT		-40.00	-5.00	-52.50	0.00	-23.50	-5.00	-52.50	0.00	DA Collimator-Top Temp B 
 1DAHACU		-998.00	0.16	-999.00	999.00	-998.00	0.16	-999.00	999.00	Detector Assy. Htr Current A 
 1DAHAVO		-998.00	1.00	-999.00	999.00	-998.00	1.00	-999.00	999.00	Detector Assy. Htr Voltage A 
 1DAHBCU		-999.00	0.20	-999.00	999.00	-999.00	0.20	-999.00	999.00	Detector Assy. Htr Current B  
