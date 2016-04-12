@@ -3,4 +3,4 @@
 mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1PDEAAT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp A 
 1PDEABT		-10.00	57.00	-36.50	62.00	0.00	57.00	-36.50	62.00	PSMC DEA Power Supply Temp B 
-1PIN1AT		-20.00	41.00	-36.50	46.00	-5.00	41.00	-36.50	46.00	PSMC Temp 1A 
+1PIN1AT		-20.00	90.00	-36.50	999.0	-5.00	90.00	-36.50	999.0	PSMC Temp 1A 
