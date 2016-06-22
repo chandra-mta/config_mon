@@ -1401,12 +1401,12 @@ my $deahk12viol = 0;
 # ****** acis dea temp limits degC
 my $deat1min = 5.0;  # min limit
 my $deat1_min = 5.0; # running min initial
-my $deat1max = 35.0; # max limit
-my $deat1_max = 35.0; # running max initial
+my $deat1max = 50.0; # max limit
+my $deat1_max = 50.0; # running max initial
 my $deat2min = 5.0;
 my $deat2_min = 5.0;
-my $deat2max = 35.0;
-my $deat2_max = 35.0;
+my $deat2max = 50.0;
+my $deat2_max = 50.0;
 my $deat3min = 0.0;
 my $deat3_min = 0.0;
 my $deat3max = 45.0;
