@@ -948,7 +948,7 @@ my %acispar;
 while (<ACISPAR>) {
   chomp;
   @parline=split; 
-  @acispar{"$parline[0]"}=[$parline[1],$parline[2],$parline[5],$parline[6],0,0,0,0,$parline[6]];
+  @acispar{"$parline[0]"}=[$parline[3],$parline[4],$parline[7],$parline[8],0,0,0,0,$parline[8]];
 } # while (<ACISPAR>) {
 close ACISPAR;
 
@@ -1796,7 +1796,7 @@ if ( -s $atoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177216763\@vtext.com";
-    open MAIL, "|mailx -s config_mon_test swolk acisdude\@brad\@head.cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.5 \n\n"; # current version
     if ( -s $dumpname ) {
