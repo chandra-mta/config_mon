@@ -13,11 +13,11 @@ ls /data/mta/Script/Dumps/Dumps_mon/IN | grep 'MUPS2' | sed 's/^/IN\//' > mupsli
 if (test -s ccdmlist); then
   if (test -s pcadlist); then
 
-    dumps_mon_2.5.pl -c @ccdmlist -p @pcadlist -a @acislist -g@irulist -d IN/deahk_temp_in.tmp -m @mupslist
+    ./dumps_mon_2.6.pl -c @ccdmlist -p @pcadlist -a @acislist -g @irulist -d IN/deahk_temp_in.tmp -m @mupslist
     #dumps_mon_2.1.pl -c @ccdmlist -p @pcadlist -a @acislist
     #dumps_mon_2.0.pl -c @ccdmlist -p @pcadlist
 
-    pred_state.ed
+    ./pred_state.ed
     #dumps_mon_1.2.pl -c @ccdmlist -p @pcadlist
     #dumps_mon_1.0.pl -c @ccdmlist -p @pcadlist
 
@@ -27,9 +27,11 @@ if (test -s ccdmlist); then
     mv irulist IN/irulist.last
     mv mupslist IN/mupslist.last
     # clean up
-    /opt/local/bin/gzip IN/*.tl
+    mv IN/*.tl /data/mta/Script/Dumps/Dumps_mon/Done 2> /dev/null
+    /bin/gzip  -q IN/*.tl
     #mv IN/*.tl.gz /home/brad/Dumps/TLfiles
-    mv IN/*.tl.gz /data/mta/Script/Dumps/TLfiles
+    #mv IN/*.tl.gz /data/mta/Script/Dumps/TLfiles
+    mv IN/*.tl.gz /data/mta/Script/Dumps/Dumps_mon/Done 2> /dev/null
     if (test -s IN/xtmpnew); then
       rm IN/xtmpnew
     fi
