@@ -62,7 +62,8 @@ def update_par():
             for line in header:
                 f.write(line)
             for k,v in par_dict.items():
-                line = f"{k}    {'    '.join(v[0])}"
+                line = f"{k}    {'    '.join(v[0])}\n"
+                f.write(line)
 
 
 def update_par_file_data(par_dict):
@@ -83,11 +84,13 @@ def update_par_file_data(par_dict):
             recent_time = par_dict[msid][1]
             update_time = float(entry_list[5])
             if update_time > recent_time:
-                yel_min = float(entry_list[1])
-                yel_max = float(entry_list[2])
-                red_min = float(entry_list[3])
-                red_max = float(entry_list[4])
+                yel_min = entry_list[1]
+                yel_max = entry_list[2]
+                red_min = entry_list[3]
+                red_max = entry_list[4]
                 comment = entry_list[6]
+                if comment[0] != "#":
+                    comment = f"#{comment}"
                 par_dict[msid] = [[yel_min, yel_max, red_min, red_max, yel_min, yel_max, red_min, red_max, comment] , update_time]
     
     return par_dict
@@ -109,10 +112,13 @@ def update_acis_ver_par(par_dict):
     for entry_list in limit_data:
         if entry_list[0] in msid_list:
             msid = entry_list[0]
-            yel_min = float(entry_list[2])
-            yel_max = float(entry_list[3])
-            red_min = float(entry_list[4])
-            red_max = float(entry_list[5])
+            yel_min = entry_list[2]
+            yel_max = entry_list[3]
+            red_min = entry_list[4]
+            red_max = entry_list[5]
+            comment = entry_list[6]
+            if comment[0] != "#":
+                comment = f"#{comment}"
             update_time = time.time() - CHANDRA_TIME_DIFF
             par_dict[msid] = [[yel_min, yel_max, red_min, red_max, yel_min, yel_max, red_min, red_max, comment] , update_time]
     

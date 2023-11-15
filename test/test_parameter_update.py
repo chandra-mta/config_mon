@@ -26,6 +26,8 @@ for mod in MOD_GROUP:
     if hasattr(mod,'PAR_FILE_LIST'):
         mod.PAR_FILE_LIST = [f"{PARENT_DIR}/acis_temp.par"]
     if hasattr(mod,'OVERWRITE_WITH_OP_LIMITS'):
-        mod.OVERWRITE_WITH_OP_LIMITS = False
+        mod.OVERWRITE_WITH_OP_LIMITS = True
+    if hasattr(mod,'OVERWRITE_WITH_ACIS'):
+        mod.OVERWRITE_WITH_ACIS = True
 
 up.update_par()
