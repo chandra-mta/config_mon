@@ -29,7 +29,7 @@ CHANDRA_TIME_DIFF = 883612730.816
 
 def update_par():
     """
-    Permute across .par files and pull data for updating file
+    update_par - Permute across .par files and pull data for updating file
     input: none, but read from list of .par files and op_limits_db to update .par files
     output: updated .par files (locally saved)
     """
@@ -67,6 +67,11 @@ def update_par():
 
 
 def update_par_file_data(par_dict):
+    """
+    update_par_file_data: iterate over parameter dictionary, updating with OP_LIMITS_DATABASE file
+    input: par_dict - dictionary of parameter values
+    output: par_dict - dictionary of parameter values (updated)
+    """
     msid_list = list(par_dict.keys())
 
     with open(OP_LIMITS_DATABASE,'r') as f:
@@ -84,18 +89,30 @@ def update_par_file_data(par_dict):
             recent_time = par_dict[msid][1]
             update_time = float(entry_list[5])
             if update_time > recent_time:
-                yel_min = entry_list[1]
-                yel_max = entry_list[2]
-                red_min = entry_list[3]
-                red_max = entry_list[4]
                 comment = entry_list[6]
                 if comment[0] != "#":
                     comment = f"#{comment}"
+                chk = False
+                if " K " in comment:
+                    #Description when specified as kelvin will contain single space separated K
+                    #Spaces important as string formatted varies throughout the file.
+                    comment = comment.replace(" K ", " C ")
+                    chk = True
+                yel_min = format_K_to_C(entry_list[1],chk)
+                yel_max = format_K_to_C(entry_list[2],chk)
+                red_min = format_K_to_C(entry_list[3],chk)
+                red_max = format_K_to_C(entry_list[4],chk)
                 par_dict[msid] = [[yel_min, yel_max, red_min, red_max, yel_min, yel_max, red_min, red_max, comment] , update_time]
     
     return par_dict
 
 def update_acis_ver_par(par_dict):
+    """
+    update_par_file_data: iterate over parameter dictionary, updating with OP_LIMITS_DATABASE file
+    input: par_dict - dictionary of parameter values
+    output: par_dict - dictionary of parameter values (updated)
+    """
+    #Note that the acis text file does not specify temperature units, consistently using celcius only.
     msid_list = list(par_dict.keys())
 
     with open(ACIS_THERMAL_LIMITS,'r') as f:
@@ -123,3 +140,16 @@ def update_acis_ver_par(par_dict):
             par_dict[msid] = [[yel_min, yel_max, red_min, red_max, yel_min, yel_max, red_min, red_max, comment] , update_time]
     
     return par_dict
+
+def format_K_to_C(val, chk):
+    """
+    format_K_to_C: Simple script to convert Kelvin fomratted limits to Celcius, maintaining the string formatting
+    input: val - string or float of kelvin value
+    output: val - string of celcius value
+    """
+    if type(val) == str:
+        val = float(val)
+    if chk:
+        val = val - 273.15
+    return str(round(val,2))
+    
