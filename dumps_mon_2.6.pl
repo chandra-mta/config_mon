@@ -96,6 +96,11 @@ $poutfile = "dumps_mon_pline.out"; #temp out for pline violations
 
 #  hack to get name of dump file(s) processed
 $dumpname = "/data/mta/Script/Dumps/Dumps_mon/IN/xtmpnew";
+
+#Email Sending
+$tester = "william.aaron\@cfa.harvard.edu";
+$mta_mail = "mtadude\@cfa.harvard.edu";
+$acis_mail = "acisdude\@cfa.harvard.edu";
 # ************** End Program Parameters ***************************
  
 #  get most recent predicted state file from HEAD network
@@ -1588,7 +1593,7 @@ close REPORT;
 #  E-mail violations, if any
 # *******************************************************************
 if ( -s "testfile.out" ) {
-  open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+  open MAIL, "|mailx -s config_mon_2.6 $tester";
   print MAIL "config_mon_2.6 \n\n"; # current version
   if ( -s $dumpname ) {
     open DNAME, "<$dumpname";
@@ -1602,7 +1607,7 @@ if ( -s "testfile.out" ) {
   while (<REPORT>) {
     print MAIL $_;
   }
-  print MAIL "This message sent to swolk malgosia.\n";
+  print MAIL "This message sent to tester.\n";
   close MAIL;
 }
 
@@ -1611,7 +1616,7 @@ my $lockfile = "./.dumps_mon_lock";
 my $safefile = "/home/mta/Snap/.scs107alert";  # lock created by snapshot
 if ( -s $outfile ) {
   if ( -s $lockfile || -s $safefile ) {  # already sent, don't send again
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1629,14 +1634,14 @@ if ( -s $outfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk brad malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
     ###test 12/06/11open MAIL, "|mailx -s config_mon sot_lead\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu jnichols\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1658,7 +1663,7 @@ if ( -s $outfile ) {
     print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_lead brad jnichols\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   }  #endelse
@@ -1676,7 +1681,7 @@ $lockfile = "./.dumps_mon_aca_lock";
 if ( -s $acafile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu acisdude\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1699,7 +1704,7 @@ if ( -s $acafile ) {
   } else {  # first violation, tell someone
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6\n\n"; # current version
     if ( -s $dumpname ) {
@@ -1734,7 +1739,7 @@ $lockfile = "./.dumps_mon_acis_lock";
 if ( -s $aoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu acisdude\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail $acis_mail";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
@@ -1753,12 +1758,12 @@ if ( -s $aoutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail and acis mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu acisdude\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail $acis_mail";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1781,7 +1786,7 @@ if ( -s $aoutfile ) {
     }
     print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail and acis mail.\n";
     close MAIL;
     close LOCK;
   }  #endelse
@@ -1800,7 +1805,7 @@ if ( -s $atoutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177216763\@vtext.com";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1818,12 +1823,12 @@ if ( -s $atoutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu 6172573986\@mobile.mycingular.com 6177216763\@vtext.com";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6\n\n"; # current version
     if ( -s $dumpname ) {
@@ -1844,7 +1849,7 @@ if ( -s $atoutfile ) {
     }
     print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail\n";
     close MAIL;
     close LOCK;
   }  #endelse
@@ -1862,7 +1867,7 @@ $lockfile = "./.dumps_mon_deatemp_lock";
 if ( -s $doutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu plucinsk\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1880,12 +1885,12 @@ if ( -s $doutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|mail brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon_test swolk brad\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1908,7 +1913,7 @@ if ( -s $doutfile ) {
     }
     print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   }  #endelse
@@ -1924,7 +1929,7 @@ unlink $doutfile;
 $lockfile = "./.dumps_mon_iru_lock";
 if ( -s $ioutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
@@ -1942,11 +1947,11 @@ if ( -s $ioutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|mailx -s config_mon sot_red_alert\@head.cfa.harvard.edu";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
@@ -1970,7 +1975,7 @@ if ( -s $ioutfile ) {
     #print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to sot_red_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";
     close MAIL;
     close LOCK;
@@ -2112,7 +2117,7 @@ unlink $ioutfile;
 $lockfile = "./.dumps_mon_mups_lock";
 if ( -s $poutfile ) {
   if ( -s $lockfile ) {  # already sent, don't send again
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     print MAIL "config_mon_2.6 \n\n"; # current version
     if ( -s $dumpname ) {
       open DNAME, "<$dumpname";
@@ -2129,11 +2134,11 @@ if ( -s $poutfile ) {
       print MAIL $_;
       print LOCK $_;
     }
-    print MAIL "This message sent to swolk malgosia.\n";
+    print MAIL "This message sent to mta mail.\n";
     close MAIL;
     close LOCK;
   } else {  # first violation, tell someone
-    open MAIL, "|mailx -s config_mon_2.6 swolk\@cfa.harvard.edu msobolewska\@cfa.harvard.edu";
+    open MAIL, "|mailx -s config_mon_2.6 $mta_mail";
     #open MAIL, "|mailx -s config_mon sot_yellow_alert\@head.cfa.harvard.edu";
     #open MAIL, "|more"; #debug
     print MAIL "config_mon_2.6\n\n"; # current version
@@ -2156,7 +2161,7 @@ if ( -s $poutfile ) {
     #print MAIL "Future violations will not be reported until rearmed by MTA.\n";
     #print MAIL "This message sent to sot_yellow_alert\n";
     #print MAIL "This message sent to sot_red_alert\n";
-    print MAIL "This message sent to swolk malgosia.\n";  #turnbackon
+    print MAIL "This message sent to mta mail.\n";  #turnbackon
     #print MAIL "This message sent to sot_lead\n";
     #print MAIL "TEST_MODE TEST_MODE TEST_MODE\n";  #turnbackon
     close MAIL;
