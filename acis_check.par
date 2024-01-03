@@ -3,7 +3,7 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1CBAT    -72.30    -52.00    -74.70    -50.00    -72.30    -52.00    -74.70    -50.00    #Camera Body Temp A
 1CBBT    -72.30    -52.00    -74.70    -50.00    -72.30    -52.00    -74.70    -50.00    #Camera Body Temp B
 1CRAT    -137.00    -90.00    -142.00    -80.00    -137.00    -90.00    -142.00    -80.00    #Cold Radiator Temp A
-1DACTBT    -40.00    -5.00    -52.50    0.00    -40.00    -5.00    -52.50    0.00    #DA Collimator-Top Temp B
+1DACTBT    -40.00    -5.00    -52.50    0.00    -40.00    -5.00    -52.50    0.00    #Door Angle Potentiometer B
 1DEAMZT    -20.00    40.50    -37.50    42.50    -20.00    40.50    -37.50    42.50    #DEA -Z Panel Temp (RT830)
 1DPAMYT    -20.00    37.50    -37.50    40.50    -20.00    37.50    -37.50    40.50    #DPA -Y Panel Temp (RT810)
 1DPAMZT    -20.00    40.50    -37.50    42.50    -20.00    40.50    -37.50    42.50    #DPA -Z Panel Temp (RT830)
@@ -50,7 +50,7 @@ mnemonic	yel lo	yel hi	red lo	red hi	yel lo	yel hi	red lo	red hi	descriptions
 1VAHCBT    210.0    998.0    200.0    999.0    210.0    998.0    200.0    999.0    #TEMPERATURE
 1VAHOAT    210.0    998.0    200.0    999.0    210.0    998.0    200.0    999.0    #TEMPERATURE
 1VAHOBT    210.0    998.0    200.0    999.0    210.0    998.0    200.0    999.0    #TEMPERATURE
-1DACTAT    68.0    75.0    65.0    80.0    68.0    75.0    65.0    80.0    #Door Angle Potentiometer
+1DACTAT    68.00    75.00    65.00    80.00    68.00    75.00    65.00    80.00    #Door Angle Potentiometer A
 1DAHAT    -998.00    998.00    -999.00    999.00    -998.00    998.00    -999.00    999.00    #Detector Assy. Housing Temp A Offset
 1DAHBT    -998.00    998.00    -999.00    999.00    -998.00    998.00    -999.00    999.00    #Detector Assy. Housing Temp B Offset
 1DEICACU    -998.00    999.00    -999.00    999.00    -998.00    999.00    -999.00    999.00    #DEA Input Current A
