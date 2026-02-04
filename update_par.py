@@ -1,17 +1,16 @@
 #!/proj/sot/ska3/flight/bin/python
+"""
+**update_par.py:** read op_limits.db database to update .par files for dumps monitoring
 
-#########################################################################################
-#                                                                                       #
-#   update_par.py: read op_limits.db database to update .par files for dumps monitoring #
-#                                                                                       #
-#   author: w. aaron ( william.aaron@cfa.harvard.edu)                                   #
-#                                                                                       #
-#   last update: Nov 08, 2023                                                           #
-#########################################################################################
+:Author: w. aaron ( william.aaron@cfa.harvard.edu)
+:Last Updated: Nov 08, 2023
 
+# /// testing
+# tested-ska-release = "2026.1"
+# ///
+"""
 
-
-import sys, os
+import os
 import time
 
 #
