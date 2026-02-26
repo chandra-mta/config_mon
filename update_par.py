@@ -152,3 +152,5 @@ def format_K_to_C(val, chk):
         val = val - 273.15
     return str(round(val,2))
     
+if __name__ == "__main__":
+    update_par()
